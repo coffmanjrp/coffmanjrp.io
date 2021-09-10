@@ -1,12 +1,14 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { NextSeo } from 'next-seo';
+import { Nav } from '@/components/index';
 
 const Home: NextPage = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen px-6 py-0 bg-gray-50 dark:bg-gray-900">
       <NextSeo />
 
+      <Nav title="coffmanjrp.io" />
       <main className="flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
         <h1 className="text-5xl font-bold">Hi! I’m Paul Coffman Jr.</h1>
         <p className="text-3xl my-5 text-gray-600 dark:text-gray-400">
