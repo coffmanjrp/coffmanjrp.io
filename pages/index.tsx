@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
-import Image from 'next/image';
 import { NextSeo } from 'next-seo';
-import { Nav } from '@/components/index';
+import { Footer, Nav } from '@/components/index';
 
 const Home: NextPage = () => {
   return (
@@ -27,24 +26,7 @@ const Home: NextPage = () => {
         </p>
       </main>
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
-          href="https://vercel.com?utm_source=create-next-app&amp;utm_medium=default-template&amp;utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className="relative w-20 h-4 ml-2">
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              layout="fill"
-              objectFit="cover"
-            />
-          </span>
-        </a>
-      </footer>
+      <Footer title="coffmanjrp.io" />
     </div>
   );
 };
