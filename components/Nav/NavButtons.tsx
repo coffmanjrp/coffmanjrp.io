@@ -1,13 +1,16 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { FaGithub, FaBars, FaTimes } from 'react-icons/fa';
 import { FiSun } from 'react-icons/fi';
+import {
+  toggleMenu,
+  selectShowMenu,
+} from '@/features/MobleMenu/mobileMenuSlice';
 
-type Props = {
-  showMenu: boolean;
-  setShowMenu: Dispatch<SetStateAction<boolean>>;
-};
+const NavButtons: FC = () => {
+  const showMenu = useAppSelector(selectShowMenu);
+  const dispatch = useAppDispatch();
 
-const NavButtons: FC<Props> = ({ showMenu, setShowMenu }) => {
   return (
     <>
       <button
@@ -30,9 +33,9 @@ const NavButtons: FC<Props> = ({ showMenu, setShowMenu }) => {
         type="button"
         className="block text-2xl text-gray-600 p-2 hover:opacity-75 md:hidden dark:text-gray-50"
         aria-label="Toggle menu"
-        onClick={() => setShowMenu((prev) => !prev)}
+        onClick={() => dispatch(toggleMenu())}
       >
-        <FaBars />
+        {showMenu ? <FaTimes /> : <FaBars />}
       </button>
     </>
   );
