@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useTheme } from 'next-themes';
 import { FaGithub, FaBars, FaTimes } from 'react-icons/fa';
-import { FiSun } from 'react-icons/fi';
+import { FiMoon, FiSun } from 'react-icons/fi';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import {
   toggleMenu,
   selectShowMenu,
@@ -10,6 +11,7 @@ import {
 const NavButtons: FC = () => {
   const showMenu = useAppSelector(selectShowMenu);
   const dispatch = useAppDispatch();
+  const { theme, setTheme } = useTheme();
 
   return (
     <>
@@ -17,8 +19,9 @@ const NavButtons: FC = () => {
         type="button"
         className="block text-2xl text-gray-600 p-2 hover:opacity-75 dark:text-gray-50"
         aria-label="Toggle theme mode"
+        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       >
-        <FiSun />
+        {theme === 'light' ? <FiSun /> : <FiMoon />}
       </button>
       <a
         href="https://github.com/coffmanjrp"
