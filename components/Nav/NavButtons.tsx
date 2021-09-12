@@ -7,11 +7,17 @@ import {
   toggleMenu,
   selectShowMenu,
 } from '@/features/MobleMenu/mobileMenuSlice';
+import useHasMounted from '@/hooks/useHasMounted';
 
 const NavButtons: FC = () => {
   const showMenu = useAppSelector(selectShowMenu);
   const dispatch = useAppDispatch();
   const { theme, setTheme } = useTheme();
+  const hasMounted = useHasMounted();
+
+  if (!hasMounted) {
+    return <h3>Loading Error...</h3>;
+  }
 
   return (
     <>
