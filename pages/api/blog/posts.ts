@@ -8,16 +8,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     path.join(process.cwd(), 'pages', 'posts', 'blog')
   );
 
-  const blogPosts = files.reduce((posts, id) => {
+  const posts = files.reduce((posts, id) => {
     const source = fs.readFileSync(
       path.join(process.cwd(), 'pages', 'posts', 'blog', id),
       'utf8'
     );
-    const { data, content } = matter(source);
+    const { data } = matter(source);
 
     return [
       {
-        content,
         data: {
           ...data,
           id: id.replace(/\.mdx/, ''),
@@ -27,5 +26,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     ];
   }, []);
 
-  res.status(200).json({ blogPosts });
+  res.status(200).json({ posts });
 }
