@@ -8,23 +8,30 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     path.join(process.cwd(), 'pages', 'posts', 'blog')
   );
 
-  const posts = files.reduce((posts, id) => {
-    const source = fs.readFileSync(
-      path.join(process.cwd(), 'pages', 'posts', 'blog', id),
-      'utf8'
-    );
-    const { data } = matter(source);
+  const posts = files
+    .reduce((posts, id) => {
+      const source = fs.readFileSync(
+        path.join(process.cwd(), 'pages', 'posts', 'blog', id),
+        'utf8'
+      );
+      const { data } = matter(source);
 
-    return [
-      {
-        data: {
-          ...data,
-          id: id.replace(/\.mdx/, ''),
+      return [
+        {
+          frontmatter: {
+            ...data,
+            id: id.replace(/\.mdx/, ''),
+          },
         },
-      },
-      ...posts,
-    ];
-  }, []);
+        ...posts,
+      ];
+    }, [])
+    .sort((a: number, b: number) =>
+      Number(new Date(a.frontmatter.date)) <
+      Number(new Date(b.frontmatter.date))
+        ? 1
+        : -1
+    );
 
   res.status(200).json({ posts });
 }

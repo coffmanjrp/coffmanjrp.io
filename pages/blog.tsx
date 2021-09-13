@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
+import { parseISO, format } from 'date-fns';
 import { Layout } from '@/components/index';
 
 type Props = {
   posts: {
-    data: {
+    frontmatter: {
       title: string;
       date: string;
       id: string;
@@ -30,13 +31,16 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
             {posts.length > 0 ? (
               posts.map((post) => (
-                <Link key={post.data.id} href={`/blog/${post.data.id}`}>
+                <Link
+                  key={post.frontmatter.id}
+                  href={`/blog/${post.frontmatter.id}`}
+                >
                   <a className="flex flex-col border border-gray-300 dark:border-gray-50 rounded p-4 w-full">
                     <h4 className="text-lg md:text-xl font-medium mb-2 w-full text-gray-900 dark:text-gray-100">
-                      {post.data.title}
+                      {post.frontmatter.title}
                     </h4>
                     <p className="text-base text-gray-600 dark:text-gray-400 mb-4 flex-1">
-                      {post.data.date}
+                      {format(parseISO(post.frontmatter.date), 'MMMM dd, yyyy')}
                     </p>
                     <p className="text-base text-gray-600 dark:text-gray-400">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.

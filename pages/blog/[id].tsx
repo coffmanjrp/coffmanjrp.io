@@ -2,16 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import type { NextPage } from 'next';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
-import { Layout } from '@/components/index';
+import { parseISO, format } from 'date-fns';
+import { Layout, MDXComponents } from '@/components/index';
 
 type Props = {
   post: {
-    content: {
+    source: {
       compiledSource: string;
       scope: {};
     };
-    data: {
+    frontmatter: {
       id: string;
       title: string;
       date: string;
@@ -20,14 +22,31 @@ type Props = {
 };
 
 const BlogPostPage: NextPage<Props> = ({ post }) => {
-  const { data, content } = post;
+  const { frontmatter, source } = post;
 
   return (
     <Layout>
-      <main className=" flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
-        <article className="prose prose-blue max-w-none">
-          <MDXRemote {...content} />
-        </article>
+      <main className="flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
+        <div className="flex flex-col w-full">
+          <h1 className="text-5xl font-bold mb-2">{frontmatter.title}</h1>
+          <div className="flex justify-between md:items-center flex-col md:flex-row mt-2 w-full mb-4">
+            <div className="flex items-center">
+              <span className="relative inline-flex items-center justify-center text-center  flex-shrink-0 gap-2">
+                <Image
+                  src="/images/portrait.png"
+                  alt="author"
+                  width={24}
+                  height={24}
+                  className="w-full h-full object-cover rounded-full"
+                />
+                <p>{format(parseISO(frontmatter.date), 'MMMM dd, yyyy')}</p>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="prose prose-blue dark:prose-dark max-w-none">
+          <MDXRemote {...source} components={MDXComponents} />
+        </div>
       </main>
     </Layout>
   );

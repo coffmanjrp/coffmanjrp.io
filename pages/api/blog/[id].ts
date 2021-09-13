@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,11 +16,11 @@ export default async function handler(
     path.join(process.cwd(), 'pages', 'posts', 'blog', `${id}.mdx`)
   );
   const { data, content } = matter(source);
-  const serializedContent = await serialize(content);
+  const mdxSource = await serialize(content);
 
   const post = {
-    content: serializedContent,
-    data: {
+    source: mdxSource,
+    frontmatter: {
       id: (id as string).replace(/\.mdx/, ''),
       ...data,
     },
