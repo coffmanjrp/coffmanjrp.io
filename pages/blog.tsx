@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { Layout } from '@/components/index';
 
@@ -54,14 +55,14 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/posts`
   );
-  const data = await res.json();
+  const { posts } = await res.json();
 
   return {
-    props: { posts: data.posts },
+    props: { posts },
   };
 };
 

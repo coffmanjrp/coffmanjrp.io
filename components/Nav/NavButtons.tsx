@@ -16,7 +16,7 @@ const NavButtons: FC = () => {
   const hasMounted = useHasMounted();
 
   if (!hasMounted) {
-    return <h3>Loading Error...</h3>;
+    return <h3>Rendering Error...</h3>;
   }
 
   return (
