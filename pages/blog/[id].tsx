@@ -6,24 +6,21 @@ import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
 import { Layout, MDXComponents } from '@/components/index';
+import { ApplyAnchorLinks } from '@/components/MDXComponents/CustomMDX';
 
 type Props = {
-  post: {
-    source: {
-      compiledSource: string;
-      scope: {};
-    };
-    frontmatter: {
-      id: string;
-      title: string;
-      date: string;
-    };
+  source: {
+    compiledSource: string;
+    scope: {};
+  };
+  frontmatter: {
+    id: string;
+    title: string;
+    date: string;
   };
 };
 
-const BlogPostPage: NextPage<Props> = ({ post }) => {
-  const { frontmatter, source } = post;
-
+const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
   return (
     <Layout>
       <main className="flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
@@ -45,7 +42,9 @@ const BlogPostPage: NextPage<Props> = ({ post }) => {
           </div>
         </div>
         <div className="prose prose-blue dark:prose-dark max-w-none">
-          <MDXRemote {...source} components={MDXComponents} />
+          <ApplyAnchorLinks>
+            <MDXRemote {...source} components={MDXComponents} />
+          </ApplyAnchorLinks>
         </div>
       </main>
     </Layout>
@@ -54,27 +53,26 @@ const BlogPostPage: NextPage<Props> = ({ post }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = fs.readdirSync(path.join(process.cwd(), 'data', 'blog'));
-  const post = posts.map((post) => ({
+  const paths = posts.map((post) => ({
     params: {
       id: post.replace(/\.mdx/, ''),
     },
   }));
 
   return {
-    paths: post,
+    paths,
     fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { id } = params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/${id}`
+    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/${params?.id}`
   );
   const { post } = await res.json();
 
   return {
-    props: { post },
+    props: { ...post },
   };
 };
 

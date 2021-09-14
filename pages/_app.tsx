@@ -5,6 +5,7 @@ import { DefaultSeo } from 'next-seo';
 import { store } from '@/app/store';
 import SEO from 'next-seo.config';
 import 'tailwindcss/tailwind.css';
+import '@/styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -631,6 +631,11 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
+anchor-js@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/anchor-js/-/anchor-js-4.3.1.tgz#643685df60fbefe7516edd07c11be98c05381cf8"
+  integrity sha512-TziERoibspey7KSm95oIdzTxiogXonJl7inQI07Y3cI25DKQaLkUftB7RhCuSb1GcwunHL6/PcIKM4dDUb9xYQ==
+
 anser@1.4.9:
   version "1.4.9"
   resolved "https://registry.yarnpkg.com/anser/-/anser-1.4.9.tgz#1f85423a5dcf8da4631a341665ff675b96845760"

@@ -16,12 +16,13 @@ export default async function handler(
     path.join(process.cwd(), 'data', 'blog', `${id}.mdx`)
   );
   const { data, content } = matter(source);
+  const slug = (id as string).replace(/\.mdx/, '');
   const mdxSource = await serialize(content);
 
   const post = {
     source: mdxSource,
     frontmatter: {
-      id: (id as string).replace(/\.mdx/, ''),
+      id: slug,
       ...data,
     },
   };

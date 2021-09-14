@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
+    "@tailwindcss/typography": "^0.4.1",
     "@types/react-redux": "^7.1.18",
+    "anchor-js": "^4.3.1",
     "date-fns": "^2.23.0",
     "gray-matter": "^4.0.3",
     "next": "11.1.2",
@@ -23,7 +25,6 @@
     "react-redux": "^7.2.5"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.4.1",
     "@types/react": "17.0.20",
     "autoprefixer": "^10.3.4",
     "eslint": "7.32.0",

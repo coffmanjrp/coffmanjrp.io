@@ -4,27 +4,27 @@ import matter from 'gray-matter';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const files = fs.readdirSync(path.join(process.cwd(), 'data', 'blog'));
+  const files = fs
+    .readdirSync(path.join(process.cwd(), 'data', 'blog'))
+    .filter((path) => /\.mdx?$/.test(path));
 
   const posts = files
-    .reduce((posts, id) => {
+    .map((id) => {
       const source = fs.readFileSync(
         path.join(process.cwd(), 'data', 'blog', id),
         'utf8'
       );
+      const slug = id.replace(/\.mdx/, '');
       const { data } = matter(source);
 
-      return [
-        {
-          frontmatter: {
-            ...data,
-            id: id.replace(/\.mdx/, ''),
-          },
+      return {
+        frontmatter: {
+          ...data,
+          id: slug,
         },
-        ...posts,
-      ];
-    }, [])
-    .sort((a: number, b: number) =>
+      };
+    })
+    .sort((a, b) =>
       Number(new Date(a.frontmatter.date)) <
       Number(new Date(b.frontmatter.date))
         ? 1

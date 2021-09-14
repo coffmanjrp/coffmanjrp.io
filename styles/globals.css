@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.anchorjs-link {
+  @apply text-gray-500 dark:text-gray-50 font-bold no-underline transition-all duration-200 ease-linear !important;
+}

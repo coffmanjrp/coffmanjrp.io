@@ -1,20 +1,4 @@
-import { FC } from 'react';
-import Link from 'next/link';
-
-const CustomLink: FC = (props) => {
-  const href = props.href;
-  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
-
-  if (isInternalLink) {
-    return (
-      <Link href={href}>
-        <a {...props}>{props.children}</a>
-      </Link>
-    );
-  }
-
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
-};
+import { CustomLink } from './CustomMDX';
 
 const MDXComponents = {
   a: CustomLink,
