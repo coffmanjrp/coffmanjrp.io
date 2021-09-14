@@ -15,6 +15,12 @@ module.exports = {
               'h1, h2, h3, h4, h5, h6': {
                 'scroll-margin-top': `${64 / 16}rem`,
               },
+              '.anchorjs-link': {
+                color: theme('colors.gray.400'),
+                fontWeight: '700',
+                textDecoration: 'none',
+                transition: 'all 200ms linear',
+              },
             },
           },
           dark: {
@@ -44,6 +50,9 @@ module.exports = {
                 borderBottomColor: theme('colors.gray.700'),
               },
               'tbody tr': { borderBottomColor: theme('colors.gray.800') },
+              '.anchorjs-link': {
+                color: theme('colors.gray.50'),
+              },
             },
           },
         };
@@ -53,5 +62,9 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography')({
+      className: 'markdown',
+    }),
+  ],
 };
