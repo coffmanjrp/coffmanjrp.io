@@ -53,9 +53,7 @@ const BlogPostPage: NextPage<Props> = ({ post }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = fs.readdirSync(
-    path.join(process.cwd(), 'pages', 'posts', 'blog')
-  );
+  const posts = fs.readdirSync(path.join(process.cwd(), 'data', 'blog'));
   const post = posts.map((post) => ({
     params: {
       id: post.replace(/\.mdx/, ''),

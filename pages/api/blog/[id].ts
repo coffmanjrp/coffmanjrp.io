@@ -13,7 +13,7 @@ export default async function handler(
   } = req;
 
   const source = fs.readFileSync(
-    path.join(process.cwd(), 'pages', 'posts', 'blog', `${id}.mdx`)
+    path.join(process.cwd(), 'data', 'blog', `${id}.mdx`)
   );
   const { data, content } = matter(source);
   const mdxSource = await serialize(content);
