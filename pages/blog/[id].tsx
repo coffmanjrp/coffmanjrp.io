@@ -41,7 +41,7 @@ const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
             </div>
           </div>
         </div>
-        <div className="prose prose-blue dark:prose-dark max-w-none">
+        <div className="markdown markdown-blue dark:markdown-dark max-w-none">
           <ApplyAnchorLinks>
             <MDXRemote {...source} components={MDXComponents} />
           </ApplyAnchorLinks>

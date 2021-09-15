@@ -3,6 +3,9 @@ import path from 'path';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import mdxPrism from 'mdx-prism';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeSlug from 'rehype-slug';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,7 +20,21 @@ export default async function handler(
   );
   const { data, content } = matter(source);
   const slug = (id as string).replace(/\.mdx/, '');
-  const mdxSource = await serialize(content);
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      rehypePlugins: [
+        mdxPrism,
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'wrap',
+            properties: { className: ['anchor-tag'] },
+          },
+        ],
+      ],
+    },
+  });
 
   const post = {
     source: mdxSource,
