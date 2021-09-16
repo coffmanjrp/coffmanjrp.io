@@ -7,9 +7,12 @@ import { Layout } from '@/components/index';
 type Props = {
   posts: {
     frontmatter: {
-      title: string;
-      date: string;
       id: string;
+      title: string;
+      published: string;
+      updated?: string;
+      author: string;
+      tags?: string;
     };
   }[];
 };
@@ -30,17 +33,26 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
           </div>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
             {posts.length > 0 ? (
-              posts.map((post) => (
-                <Link
-                  key={post.frontmatter.id}
-                  href={`/blog/${post.frontmatter.id}`}
-                >
+              posts.map(({ frontmatter }) => (
+                <Link key={frontmatter.id} href={`/blog/${frontmatter.id}`}>
                   <a className="flex flex-col border border-gray-300 dark:border-gray-50 rounded p-4 w-full">
                     <h4 className="text-lg md:text-xl font-medium mb-2 w-full text-gray-900 dark:text-gray-100">
-                      {post.frontmatter.title}
+                      {frontmatter.title}
                     </h4>
-                    <p className="text-base text-gray-600 dark:text-gray-400 mb-4 flex-1">
-                      {format(parseISO(post.frontmatter.date), 'MMMM dd, yyyy')}
+                    <p className="flex-1 mb-4 text-base text-gray-600 dark:text-gray-400">
+                      {frontmatter.updated ? (
+                        <>
+                          {format(
+                            parseISO(frontmatter.updated),
+                            'MMMM dd, yyyy'
+                          )}{' '}
+                          <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-50">
+                            Updated❗
+                          </span>
+                        </>
+                      ) : (
+                        format(parseISO(frontmatter.published), 'MMMM dd, yyyy')
+                      )}
                     </p>
                     <p className="text-base text-gray-600 dark:text-gray-400">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -50,7 +62,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                 </Link>
               ))
             ) : (
-              <h3 className="my-10">No Posts Found</h3>
+              <h3 className="my-10">No Posts 😢</h3>
             )}
           </div>
         </main>

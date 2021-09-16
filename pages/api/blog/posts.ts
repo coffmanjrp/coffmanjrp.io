@@ -25,8 +25,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       };
     })
     .sort((a, b) =>
-      Number(new Date(a.frontmatter.date)) <
-      Number(new Date(b.frontmatter.date))
+      Number(new Date(a.frontmatter.published)) <
+      Number(new Date(b.frontmatter.published))
         ? 1
         : -1
     );
