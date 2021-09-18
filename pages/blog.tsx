@@ -21,8 +21,8 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
   return (
     <>
       <Layout>
-        <main className="flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
-          <div className="relative w-full my-8">
+        <main className="w-full max-w-screen-md mx-auto">
+          <div className="relative w-full mb-8">
             <h1 className="text-5xl font-bold">Blog Posts ({posts.length})</h1>
             <p className="text-base text-gray-600 dark:text-gray-400 my-6">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro

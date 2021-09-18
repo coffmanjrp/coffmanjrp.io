@@ -30,10 +30,10 @@ const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
 
   return (
     <Layout>
-      <main className="flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
+      <article className="w-full max-w-screen-md mx-auto">
         <div className="flex flex-col w-full">
-          <h1 className="text-5xl font-bold mb-2">{title}</h1>
-          <div className="inline-flex my-2">
+          <h1 className="text-5xl font-bold mb-8 text-center">{title}</h1>
+          <div className="inline-flex mb-4">
             {tagArray &&
               tagArray.map((tag, index) => (
                 <Link key={index} href={`/blog/${tag}`}>
@@ -81,7 +81,7 @@ const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
             <MDXRemote {...source} components={MDXComponents} />
           </ApplyAnchorLinks>
         </div>
-      </main>
+      </article>
     </Layout>
   );
 };

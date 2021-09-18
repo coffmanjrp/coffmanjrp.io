@@ -1,3 +1,4 @@
+export { default as Container } from './Layout/Container';
 export { default as Footer } from './Footer/Footer';
 export { default as Layout } from './Layout/Layout';
 export { default as MDXComponents } from './MDXComponents/MDXComponents';

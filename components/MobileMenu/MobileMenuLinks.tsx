@@ -22,6 +22,16 @@ const MobileMenuLinks: FC = () => {
             </Link>
           </li>
         ))}
+      <li>
+        <Link href="/">
+          <a
+            href="text-base text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
+            onClick={() => dispatch(toggleMenu())}
+          >
+            Home
+          </a>
+        </Link>
+      </li>
     </ul>
   );
 };

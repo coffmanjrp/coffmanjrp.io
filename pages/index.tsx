@@ -7,7 +7,7 @@ const Home: NextPage = () => {
     <>
       <NextSeo />
       <Layout>
-        <main className="flex-1 w-full max-w-screen-md mx-auto py-24 md:pt-24">
+        <main className="w-full max-w-screen-md mx-auto">
           <h1 className="text-5xl font-bold">Hi! I’m Paul Coffman Jr.</h1>
           <p className="text-3xl my-5 text-gray-600 dark:text-gray-400">
             Frontend, Backend, Web developer
