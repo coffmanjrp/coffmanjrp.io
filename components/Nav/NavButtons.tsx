@@ -34,7 +34,7 @@ const NavButtons: FC = () => {
         className="block text-2xl p-2 text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
         target="_blank"
         rel="noreferrer noopener"
-        aria-label="Visit to coffmanjrp's Github page"
+        aria-label="Visit to coffmanjrp's Github profile"
       >
         <FaGithub />
       </a>

@@ -5,7 +5,7 @@ import {
   Footer,
   MobileMenu,
   Nav,
-  SideNav,
+  SiteNav,
 } from '@/components/index';
 
 type Props = {
@@ -20,7 +20,7 @@ const Layout: FC<Props> = ({ children, toc }) => {
     <div className="flex flex-col justify-center items-center min-h-screen px-6 py-0 bg-gray-50 dark:bg-gray-900">
       <Nav title={title} />
       <Container>
-        <SideNav />
+        <SiteNav />
         {children}
         <FloatingTOC toc={toc} />
       </Container>
