@@ -1,20 +1,28 @@
 import { FC, ReactElement } from 'react';
-import { Container, Footer, MobileMenu, Nav } from '@/components/index';
+import {
+  Container,
+  FloatingTOC,
+  Footer,
+  MobileMenu,
+  Nav,
+  SideNav,
+} from '@/components/index';
 
 type Props = {
   children: ReactElement;
+  toc?: string[];
 };
 
-const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = ({ children, toc }) => {
   const title = 'coffmanjrp.io';
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen px-6 py-0 bg-gray-50 dark:bg-gray-900">
       <Nav title={title} />
       <Container>
-        <div className="hidden md:block w-64 bg-red-200" />
+        <SideNav />
         {children}
-        <div className="hidden md:block w-64 bg-green-200" />
+        <FloatingTOC toc={toc} />
       </Container>
       <Footer title={title} />
       <MobileMenu />

@@ -1,13 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import { useRef } from 'react';
 import type { NextPage } from 'next';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
+import { slug } from 'github-slugger';
 import { Layout, MDXComponents } from '@/components/index';
-import { ApplyAnchorLinks } from '@/components/MDXComponents/CustomMDX';
+import useSyntaxTree from '@/hooks/useSyntaxTree';
 
 type Props = {
   source: {
@@ -25,14 +27,19 @@ type Props = {
 };
 
 const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
+  const root = useRef();
   const { title, published, updated, author, tags } = frontmatter;
   const tagArray = tags?.split(' ');
+  const titleSlug = slug(title);
+  const syntaxTree = useSyntaxTree(root, title);
 
   return (
-    <Layout>
+    <Layout toc={syntaxTree}>
       <article className="w-full max-w-screen-md mx-auto">
         <div className="flex flex-col w-full">
-          <h1 className="text-5xl font-bold mb-8 text-center">{title}</h1>
+          <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">
+            {title}
+          </h1>
           <div className="inline-flex mb-4">
             {tagArray &&
               tagArray.map((tag, index) => (
@@ -76,10 +83,11 @@ const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
             </div>
           </div>
         </div>
-        <div className="markdown markdown-blue dark:markdown-dark max-w-none">
-          <ApplyAnchorLinks>
-            <MDXRemote {...source} components={MDXComponents} />
-          </ApplyAnchorLinks>
+        <div
+          ref={root}
+          className="markdown markdown-blue dark:markdown-dark max-w-none"
+        >
+          <MDXRemote {...source} components={MDXComponents} />
         </div>
       </article>
     </Layout>

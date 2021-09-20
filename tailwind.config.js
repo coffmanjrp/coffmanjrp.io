@@ -11,11 +11,7 @@ module.exports = {
       typography(theme) {
         return {
           DEFAULT: {
-            css: {
-              'h1, h2, h3, h4, h5, h6': {
-                'scroll-margin-top': `${64 / 16}rem`,
-              },
-            },
+            css: {},
           },
           dark: {
             css: {

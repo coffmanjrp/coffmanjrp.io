@@ -6,6 +6,15 @@ html {
   scroll-behavior: smooth;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  scroll-margin-top: calc(64rem / 16);
+}
+
 .markdown .anchor-tag {
   @apply text-gray-900 dark:text-gray-50 no-underline cursor-pointer;
 }
@@ -304,5 +313,5 @@ pre[class*='language-'] > code[class*='language-'] {
   z-index: 0;
 }
 /**
- * prism-themes/themes/prism-vsc-dark-plus.css End
+ * prism-vsc-dark-plus End
  */
