@@ -11,7 +11,9 @@ module.exports = {
       typography(theme) {
         return {
           DEFAULT: {
-            css: {},
+            css: {
+              code: { color: theme('colors.pink.500') },
+            },
           },
           dark: {
             css: {
@@ -29,7 +31,11 @@ module.exports = {
               h2: { color: theme('colors.gray.50') },
               h3: { color: theme('colors.gray.50') },
               h4: { color: theme('colors.gray.50') },
-              code: { color: theme('colors.gray.50') },
+              code: { color: theme('colors.blue.400') },
+              blockquote: {
+                borderLeftColor: theme('colors.gray.700'),
+                color: theme('colors.gray.50'),
+              },
               'a code': { color: theme('colors.gray.50') },
               pre: {
                 color: theme('colors.gray.200'),

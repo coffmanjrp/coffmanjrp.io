@@ -15,6 +15,8 @@ const NavButtons: FC = () => {
   const { theme, setTheme } = useTheme();
   const hasMounted = useHasMounted();
 
+  const handleClick = () => dispatch(toggleMenu());
+
   if (!hasMounted) {
     return <h3>Rendering Error...</h3>;
   }
@@ -42,7 +44,7 @@ const NavButtons: FC = () => {
         type="button"
         className="block text-2xl text-gray-600 p-2 hover:opacity-75 md:hidden dark:text-gray-50"
         aria-label="Toggle menu"
-        onClick={() => dispatch(toggleMenu())}
+        onClick={handleClick}
       >
         {showMenu ? <FaTimes /> : <FaBars />}
       </button>

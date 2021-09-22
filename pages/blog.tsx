@@ -1,7 +1,9 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
+import { getPlaiceholder } from 'plaiceholder';
 import { Layout } from '@/components/index';
 
 type Props = {
@@ -13,7 +15,10 @@ type Props = {
       updated?: string;
       author: string;
       tags?: string;
+      cover: string;
     };
+    img: { src: string; width: number; height: number; type: string };
+    base64: string;
   }[];
 };
 
@@ -33,34 +38,41 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
           </div>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
             {posts.length > 0 ? (
-              posts.map(({ frontmatter }) => (
-                <Link key={frontmatter.id} href={`/blog/${frontmatter.id}`}>
-                  <a className="flex flex-col border border-gray-300 dark:border-gray-50 rounded p-4 w-full">
-                    <h4 className="text-lg md:text-xl font-medium mb-2 w-full text-gray-900 dark:text-gray-100">
-                      {frontmatter.title}
-                    </h4>
-                    <p className="flex-1 mb-4 text-base text-gray-600 dark:text-gray-400">
-                      {frontmatter.updated ? (
-                        <>
-                          {format(
-                            parseISO(frontmatter.updated),
-                            'MMMM dd, yyyy'
-                          )}{' '}
-                          <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-50">
-                            Updated❗
-                          </span>
-                        </>
-                      ) : (
-                        format(parseISO(frontmatter.published), 'MMMM dd, yyyy')
-                      )}
-                    </p>
-                    <p className="text-base text-gray-600 dark:text-gray-400">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Ipsum, laborum.
-                    </p>
-                  </a>
-                </Link>
-              ))
+              posts.map(
+                ({
+                  frontmatter: { id, title, updated, published },
+                  img,
+                  base64,
+                }) => (
+                  <Link key={id} href={`/blog/${id}`}>
+                    <a className="flex flex-col border border-gray-300 dark:border-gray-50 rounded p-4 w-full">
+                      <div className="flex-1">
+                        <Image
+                          {...img}
+                          alt={title}
+                          placeholder="blur"
+                          blurDataURL={base64}
+                        />
+                      </div>
+                      <h4 className="text-lg md:text-xl font-medium mb-2 w-full text-gray-900 dark:text-gray-100">
+                        {title}
+                      </h4>
+                      <p className="text-base text-gray-600 dark:text-gray-400">
+                        {updated ? (
+                          <>
+                            {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
+                            <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-50">
+                              ❗ Updated
+                            </span>
+                          </>
+                        ) : (
+                          format(parseISO(published), 'MMMM dd, yyyy')
+                        )}
+                      </p>
+                    </a>
+                  </Link>
+                )
+              )
             ) : (
               <h3 className="my-10">No Posts 😢</h3>
             )}
@@ -76,9 +88,20 @@ export const getStaticProps: GetStaticProps = async () => {
     `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/posts`
   );
   const { posts } = await res.json();
+  const newPosts = await Promise.all(
+    posts.map(async (post) => {
+      const { base64, img } = await getPlaiceholder(
+        post.frontmatter.cover
+          ? post.frontmatter.cover
+          : '/images/placeholder.jpg'
+      );
+
+      return { ...post, base64, img };
+    })
+  );
 
   return {
-    props: { posts },
+    props: { posts: newPosts },
   };
 };
 

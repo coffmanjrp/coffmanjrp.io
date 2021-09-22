@@ -7,9 +7,9 @@ const useSyntaxTree = (root, title) => {
   const titleSlug = slug(title);
 
   useEffect(() => {
-    const hast = fromDom(root.current);
+    const { children } = fromDom(root.current);
 
-    const tree = hast.children
+    const tree = children
       .filter((item: { tagName: string }) => {
         return (
           item.tagName === 'h1' ||

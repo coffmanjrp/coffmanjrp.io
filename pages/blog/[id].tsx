@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
 import { slug } from 'github-slugger';
+import { getPlaiceholder } from 'plaiceholder';
 import { Layout, MDXComponents } from '@/components/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
 
@@ -24,11 +25,20 @@ type Props = {
     author: string;
     tags?: string;
   };
+  plaiceholder: {
+    img: { src: string; width: number; height: number; type: string };
+    base64: string;
+  };
 };
 
-const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
+const BlogPostPage: NextPage<Props> = ({
+  frontmatter,
+  source,
+  plaiceholder,
+}) => {
   const root = useRef();
   const { title, published, updated, author, tags } = frontmatter;
+  const { base64, img } = plaiceholder;
   const tagArray = tags?.split(' ');
   const titleSlug = slug(title);
   const syntaxTree = useSyntaxTree(root, title);
@@ -40,7 +50,15 @@ const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
           <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">
             {title}
           </h1>
-          <div className="inline-flex mb-4">
+          {img && (
+            <Image
+              {...img}
+              alt={title}
+              placeholder="blur"
+              blurDataURL={base64}
+            />
+          )}
+          <div className="inline-flex mt-8 mb-4">
             {tagArray &&
               tagArray.map((tag, index) => (
                 <Link key={index} href={`/blog/${tag}`}>
@@ -95,7 +113,7 @@ const BlogPostPage: NextPage<Props> = ({ frontmatter, source }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = fs.readdirSync(path.join(process.cwd(), 'data', 'blog'));
+  const posts = fs.readdirSync(path.join(process.cwd(), 'contents', 'blog'));
   const paths = posts.map((post) => ({
     params: {
       id: post.replace(/\.mdx/, ''),
@@ -114,8 +132,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   );
   const { post } = await res.json();
 
+  const generatePlaiceholder = await getPlaiceholder(
+    post.frontmatter.cover ? post.frontmatter.cover : '/images/placeholder.jpg'
+  );
+  const { img, base64 } = generatePlaiceholder;
+
   return {
-    props: { ...post },
+    props: { ...post, plaiceholder: { img, base64 } },
   };
 };
 

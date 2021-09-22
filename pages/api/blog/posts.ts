@@ -5,13 +5,13 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const files = fs
-    .readdirSync(path.join(process.cwd(), 'data', 'blog'))
+    .readdirSync(path.join(process.cwd(), 'contents', 'blog'))
     .filter((path) => /\.mdx?$/.test(path));
 
   const posts = files
     .map((id) => {
       const source = fs.readFileSync(
-        path.join(process.cwd(), 'data', 'blog', id),
+        path.join(process.cwd(), 'contents', 'blog', id),
         'utf8'
       );
       const slug = id.replace(/\.mdx/, '');
