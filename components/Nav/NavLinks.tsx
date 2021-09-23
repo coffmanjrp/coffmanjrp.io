@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { navLinks } from '@/lib/links';
+import { cx } from '@/styles/index';
 
 const NavLinks: FC = () => {
   return (
@@ -9,9 +10,7 @@ const NavLinks: FC = () => {
         navLinks.map(({ id, path, title }) => (
           <li key={id}>
             <Link href={path}>
-              <a href="text-base text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50">
-                {title}
-              </a>
+              <a className={cx('b-link')}>{title}</a>
             </Link>
           </li>
         ))}

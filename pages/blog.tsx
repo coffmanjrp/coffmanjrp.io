@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
 import { Layout } from '@/components/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
+import { cx } from '@/styles/index';
 
 type Props = {
   posts: {
@@ -28,10 +29,10 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
   return (
     <>
       <Layout>
-        <main className="w-full max-w-screen-md mx-auto">
+        <main className={cx('u-main')}>
           <div className="relative w-full mb-8">
-            <h1 className="text-5xl font-bold">Blog Posts ({posts.length})</h1>
-            <p className="text-base text-gray-600 dark:text-gray-400 my-6">
+            <h1 className={cx('b-heading')}>Blog Posts ({posts.length})</h1>
+            <p className={cx('b-paragraph', 'my-6')}>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro
               deserunt fugit, nesciunt tempore autem esse molestias in corrupti
               quo natus, illum dolore quod ea dolores accusantium animi nemo
@@ -58,11 +59,11 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                       <h4 className="text-lg md:text-xl font-medium mb-2 w-full text-gray-900 dark:text-gray-100">
                         {title}
                       </h4>
-                      <p className="text-base text-gray-600 dark:text-gray-400">
+                      <p className={cx('b-paragraph')}>
                         {updated ? (
                           <>
                             {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
-                            <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-50">
+                            <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-100">
                               ❗ Updated
                             </span>
                           </>
@@ -90,7 +91,7 @@ export const getStaticProps: GetStaticProps = async () => {
   );
   const { posts } = await res.json();
   const newPosts = await Promise.all(
-    posts.map(async (post) => {
+    posts.map(async (post: { frontmatter: { cover: string } }) => {
       const { img, base64 } = await generatePlaiceholder(
         post.frontmatter.cover
       );

@@ -25,7 +25,7 @@ const NavButtons: FC = () => {
     <>
       <button
         type="button"
-        className="block text-2xl text-gray-600 p-2 hover:opacity-75 dark:text-gray-50"
+        className="block text-2xl text-gray-600 p-2 hover:opacity-75 dark:text-gray-100"
         aria-label="Toggle theme mode"
         onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       >
@@ -33,7 +33,7 @@ const NavButtons: FC = () => {
       </button>
       <a
         href="https://github.com/coffmanjrp"
-        className="block text-2xl p-2 text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
+        className="block text-2xl p-2 text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-100"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Visit to coffmanjrp's Github profile"
@@ -42,7 +42,7 @@ const NavButtons: FC = () => {
       </a>
       <button
         type="button"
-        className="block text-2xl text-gray-600 p-2 hover:opacity-75 md:hidden dark:text-gray-50"
+        className="block text-2xl text-gray-600 p-2 hover:opacity-75 md:hidden dark:text-gray-100"
         aria-label="Toggle menu"
         onClick={handleClick}
       >

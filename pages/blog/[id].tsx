@@ -62,7 +62,7 @@ const BlogPostPage: NextPage<Props> = ({
             {tagArray &&
               tagArray.map((tag, index) => (
                 <Link key={index} href={`/blog/${tag}`}>
-                  <a className="inline-block bg-gray-200 dark:bg-gray-500 px-1 rounded-md mr-1 text-sm leading-5 no-underline select-none text-gray-600 dark:text-gray-50">
+                  <a className="inline-block bg-gray-200 dark:bg-gray-500 px-1 rounded-md mr-1 text-sm leading-5 no-underline select-none text-gray-600 dark:text-gray-100">
                     # {tag}
                   </a>
                 </Link>

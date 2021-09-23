@@ -13,7 +13,7 @@ const FooterLinks: FC = () => {
             <a
               key={id}
               href={url}
-              className="block text-2xl text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
+              className="block text-2xl text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-100"
               target="_blank"
               rel="noreferrer noopener"
               aria-label={label}

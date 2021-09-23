@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { slug } from 'github-slugger';
+import { cx } from '@/styles/index';
 
 type Props = {
   toc: {
@@ -35,7 +36,12 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
               <li key={slugger}>
                 <a
                   href={`#${slugger}`}
-                  className={`no-underline text-gray-600 hover:text-gray-900 dark:text-gray-50 dark:hover:text-gray-400 hover:font-semibold ${indent[tag]}`}
+                  className={cx(
+                    'b-link',
+                    'dark:hover:text-gray-400',
+                    'hover:font-semibold',
+                    indent[tag]
+                  )}
                 >
                   {item.innerText}
                 </a>

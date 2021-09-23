@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { navLinks } from '@/lib/links';
 import { useAppDispatch } from '@/app/hooks';
 import { toggleMenu } from '@/features/MobleMenu/mobileMenuSlice';
+import { cx } from '@/styles/index';
 
 const MobileMenuLinks: FC = () => {
   const dispatch = useAppDispatch();
@@ -10,15 +11,12 @@ const MobileMenuLinks: FC = () => {
   const handleClick = () => dispatch(toggleMenu());
 
   return (
-    <ul className="flex gap-5 flex-col mt-6 ml-3">
+    <ul className="flex gap-5 flex-col ml-3">
       {navLinks.length > 0 &&
         navLinks.map(({ id, path, title }) => (
           <li key={id}>
             <Link href={path}>
-              <a
-                href="text-base text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
-                onClick={handleClick}
-              >
+              <a className={cx('b-link')} onClick={handleClick}>
                 {title}
               </a>
             </Link>
@@ -26,10 +24,7 @@ const MobileMenuLinks: FC = () => {
         ))}
       <li>
         <Link href="/">
-          <a
-            href="text-base text-gray-600 no-underline hover:opacity-75 focus:outline-none focus:ring dark:text-gray-50"
-            onClick={handleClick}
-          >
+          <a className={cx('b-link')} onClick={handleClick}>
             Home
           </a>
         </Link>
