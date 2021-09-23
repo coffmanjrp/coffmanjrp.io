@@ -8,8 +8,8 @@ import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
 import { slug } from 'github-slugger';
-import { getPlaiceholder } from 'plaiceholder';
 import { Layout, MDXComponents } from '@/components/index';
+import { generatePlaiceholder } from '@/lib/plaiceholder';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
 
 type Props = {
@@ -131,11 +131,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/${params?.id}`
   );
   const { post } = await res.json();
-
-  const generatePlaiceholder = await getPlaiceholder(
-    post.frontmatter.cover ? post.frontmatter.cover : '/images/placeholder.jpg'
-  );
-  const { img, base64 } = generatePlaiceholder;
+  const { img, base64 } = await generatePlaiceholder(post.frontmatter.cover);
 
   return {
     props: { ...post, plaiceholder: { img, base64 } },

@@ -3,8 +3,8 @@ import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
-import { getPlaiceholder } from 'plaiceholder';
 import { Layout } from '@/components/index';
+import { generatePlaiceholder } from '@/lib/plaiceholder';
 
 type Props = {
   posts: {
@@ -17,8 +17,10 @@ type Props = {
       tags?: string;
       cover: string;
     };
-    img: { src: string; width: number; height: number; type: string };
-    base64: string;
+    plaiceholder: {
+      img: { src: string; width: number; height: number; type: string };
+      base64: string;
+    };
   }[];
 };
 
@@ -41,8 +43,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               posts.map(
                 ({
                   frontmatter: { id, title, updated, published },
-                  img,
-                  base64,
+                  plaiceholder: { img, base64 },
                 }) => (
                   <Link key={id} href={`/blog/${id}`}>
                     <a className="flex flex-col border border-gray-300 dark:border-gray-50 rounded p-4 w-full">
@@ -90,13 +91,11 @@ export const getStaticProps: GetStaticProps = async () => {
   const { posts } = await res.json();
   const newPosts = await Promise.all(
     posts.map(async (post) => {
-      const { base64, img } = await getPlaiceholder(
+      const { img, base64 } = await generatePlaiceholder(
         post.frontmatter.cover
-          ? post.frontmatter.cover
-          : '/images/placeholder.jpg'
       );
 
-      return { ...post, base64, img };
+      return { ...post, plaiceholder: { base64, img } };
     })
   );
 
