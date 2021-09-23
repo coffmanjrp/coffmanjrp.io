@@ -15,7 +15,9 @@ const NavButtons: FC = () => {
   const { theme, setTheme } = useTheme();
   const hasMounted = useHasMounted();
 
-  const handleClick = () => dispatch(toggleMenu());
+  const handleToggleMenu = () => dispatch(toggleMenu());
+
+  const handleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
   if (!hasMounted) {
     return <h3>Rendering Error...</h3>;
@@ -27,7 +29,7 @@ const NavButtons: FC = () => {
         type="button"
         className="block text-2xl text-gray-600 p-2 hover:opacity-75 dark:text-gray-100"
         aria-label="Toggle theme mode"
-        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+        onClick={handleTheme}
       >
         {theme === 'light' ? <FiSun /> : <FiMoon />}
       </button>
@@ -44,7 +46,7 @@ const NavButtons: FC = () => {
         type="button"
         className="block text-2xl text-gray-600 p-2 hover:opacity-75 md:hidden dark:text-gray-100"
         aria-label="Toggle menu"
-        onClick={handleClick}
+        onClick={handleToggleMenu}
       >
         {showMenu ? <FaTimes /> : <FaBars />}
       </button>

@@ -1,9 +1,7 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
-import { Layout } from '@/components/index';
+import { Card, Layout } from '@/components/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
 
@@ -19,8 +17,13 @@ type Props = {
       cover: string;
     };
     plaiceholder: {
-      img: { src: string; width: number; height: number; type: string };
-      base64: string;
+      img: {
+        src: string;
+        width: number;
+        height: number;
+        type: string;
+        blurDataURL: string;
+      };
     };
   }[];
 };
@@ -44,35 +47,20 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               posts.map(
                 ({
                   frontmatter: { id, title, updated, published },
-                  plaiceholder: { img, base64 },
+                  plaiceholder: { img },
                 }) => (
-                  <Link key={id} href={`/blog/${id}`}>
-                    <a className="flex flex-col border border-gray-300 dark:border-gray-50 rounded p-4 w-full">
-                      <div className="flex-1">
-                        <Image
-                          {...img}
-                          alt={title}
-                          placeholder="blur"
-                          blurDataURL={base64}
-                        />
-                      </div>
-                      <h4 className="text-lg md:text-xl font-medium mb-2 w-full text-gray-900 dark:text-gray-100">
-                        {title}
-                      </h4>
-                      <p className={cx('b-paragraph')}>
-                        {updated ? (
-                          <>
-                            {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
-                            <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-100">
-                              ❗ Updated
-                            </span>
-                          </>
-                        ) : (
-                          format(parseISO(published), 'MMMM dd, yyyy')
-                        )}
-                      </p>
-                    </a>
-                  </Link>
+                  <Card key={id} link={`/blog/${id}`} img={img} title={title}>
+                    {updated ? (
+                      <>
+                        {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
+                        <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-100">
+                          ❗ Updated
+                        </span>
+                      </>
+                    ) : (
+                      format(parseISO(published), 'MMMM dd, yyyy')
+                    )}
+                  </Card>
                 )
               )
             ) : (
@@ -96,7 +84,10 @@ export const getStaticProps: GetStaticProps = async () => {
         post.frontmatter.cover
       );
 
-      return { ...post, plaiceholder: { base64, img } };
+      return {
+        ...post,
+        plaiceholder: { img: { ...img, blurDataURL: base64 } },
+      };
     })
   );
 

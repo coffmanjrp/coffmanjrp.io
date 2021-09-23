@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       <Layout>
         <main className={cx('u-main')}>
           <h1 className={cx('b-heading')}>Hi! I’m Paul Coffman Jr.</h1>
-          <p className={cx('b-paragraph', 'my-5', 'text-3xl')}>
+          <p className={cx('b-lead', 'my-5', 'text-3xl')}>
             Frontend, Backend, Web developer
           </p>
           <p className={cx('b-paragraph')}>

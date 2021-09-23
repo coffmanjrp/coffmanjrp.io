@@ -1,3 +1,4 @@
+export { default as Card } from './Card/Card';
 export { default as Container } from './Layout/Container';
 export { default as FloatingTOC } from './SideNav/FloatingTOC';
 export { default as Footer } from './Footer/Footer';

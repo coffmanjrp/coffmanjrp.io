@@ -1,8 +1,9 @@
 import { createCx } from '@joebell/cx';
 
 const shortcuts = {
-  'b-heading': ['text-5xl', 'font-bold', 'text-black', 'dark:text-gray-100'],
-  'b-paragraph': ['text-base', 'text-gray-600', 'dark:text-gray-400'],
+  'b-heading': ['text-5xl', 'font-bold', 'gray-900', 'dark:text-gray-100'],
+  'b-paragraph': ['text-base', 'text-gray-600', 'dark:text-gray-100'],
+  'b-lead': ['font-semibold', 'text-gray-600', 'dark:text-gray-100'],
   'b-link': [
     'text-base',
     'text-gray-600',

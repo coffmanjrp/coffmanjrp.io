@@ -26,8 +26,13 @@ type Props = {
     tags?: string;
   };
   plaiceholder: {
-    img: { src: string; width: number; height: number; type: string };
-    base64: string;
+    img: {
+      src: string;
+      width: number;
+      height: number;
+      type: string;
+      blurDataURL: string;
+    };
   };
 };
 
@@ -38,7 +43,7 @@ const BlogPostPage: NextPage<Props> = ({
 }) => {
   const root = useRef();
   const { title, published, updated, author, tags } = frontmatter;
-  const { base64, img } = plaiceholder;
+  const { img } = plaiceholder;
   const tagArray = tags?.split(' ');
   const titleSlug = slug(title);
   const syntaxTree = useSyntaxTree(root, title);
@@ -50,14 +55,7 @@ const BlogPostPage: NextPage<Props> = ({
           <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">
             {title}
           </h1>
-          {img && (
-            <Image
-              {...img}
-              alt={title}
-              placeholder="blur"
-              blurDataURL={base64}
-            />
-          )}
+          {img && <Image {...img} alt={title} placeholder="blur" />}
           <div className="inline-flex mt-8 mb-4">
             {tagArray &&
               tagArray.map((tag, index) => (
@@ -134,7 +132,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { img, base64 } = await generatePlaiceholder(post.frontmatter.cover);
 
   return {
-    props: { ...post, plaiceholder: { img, base64 } },
+    props: { ...post, plaiceholder: { img: { ...img, blurDataURL: base64 } } },
   };
 };
 
