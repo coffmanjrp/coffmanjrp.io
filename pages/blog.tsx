@@ -2,13 +2,14 @@ import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
 import { parseISO, format } from 'date-fns';
 import { Card, Layout } from '@/components/index';
+import { API_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
 
 type Props = {
   posts: {
     frontmatter: {
-      id: string;
+      slug: string;
       title: string;
       published: string;
       updated?: string;
@@ -46,10 +47,15 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
             {posts.length > 0 ? (
               posts.map(
                 ({
-                  frontmatter: { id, title, updated, published },
+                  frontmatter: { slug, title, updated, published },
                   plaiceholder: { img },
                 }) => (
-                  <Card key={id} link={`/blog/${id}`} img={img} title={title}>
+                  <Card
+                    key={slug}
+                    link={`/blog/${slug}`}
+                    img={img}
+                    title={title}
+                  >
                     {updated ? (
                       <>
                         {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
@@ -74,9 +80,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/posts`
-  );
+  const res = await fetch(`${API_ENDPOINT}/api/blog/posts`);
   const { posts } = await res.json();
   const newPosts = await Promise.all(
     posts.map(async (post: { frontmatter: { cover: string } }) => {

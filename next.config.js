@@ -2,7 +2,13 @@
 
 module.exports = {
   reactStrictMode: true,
-  images: { domains: ['www.markdownguide.org', 'upload.wikimedia.org'] },
+  images: {
+    domains: [
+      'res.cloudinary.com',
+      'www.markdownguide.org',
+      'upload.wikimedia.org',
+    ],
+  },
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
