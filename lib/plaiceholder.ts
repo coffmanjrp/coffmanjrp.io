@@ -1,9 +1,7 @@
 import { getPlaiceholder } from 'plaiceholder';
 
-export const generatePlaiceholder = async (cover: string) => {
-  const { img, base64 } = await getPlaiceholder(
-    cover ? cover : '/images/placeholder.jpg'
-  );
+export const generatePlaiceholder = async (media: string, alt: string) => {
+  const { img, base64 } = await getPlaiceholder(media ? media : alt);
 
   return {
     img,

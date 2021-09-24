@@ -18,7 +18,6 @@
       "@/app/*": ["app/*"],
       "@/components/*": ["components/*"],
       "@/config/*": ["config/*"],
-      "@/content/*": ["content/*"],
       "@/features/*": ["features/*"],
       "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],

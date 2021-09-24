@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { useRef } from 'react';
 import type { NextPage } from 'next';
 import { GetStaticProps, GetStaticPaths } from 'next';
@@ -9,8 +7,9 @@ import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
 import { slug } from 'github-slugger';
 import { Layout, MDXComponents } from '@/components/index';
-import { generatePlaiceholder } from '@/lib/plaiceholder';
+import { API_ENDPOINT } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
+import { generatePlaiceholder } from '@/lib/plaiceholder';
 
 type Props = {
   source: {
@@ -18,15 +17,22 @@ type Props = {
     scope: {};
   };
   frontmatter: {
-    id: string;
+    slug: string;
     title: string;
     published: string;
     updated?: string;
-    author: string;
+    author: { name: string; portrait: string };
     tags?: string;
   };
-  plaiceholder: {
-    img: {
+  plaiceholders: {
+    cover: {
+      src: string;
+      width: number;
+      height: number;
+      type: string;
+      blurDataURL: string;
+    };
+    portrait: {
       src: string;
       width: number;
       height: number;
@@ -39,11 +45,17 @@ type Props = {
 const BlogPostPage: NextPage<Props> = ({
   frontmatter,
   source,
-  plaiceholder,
+  plaiceholders,
 }) => {
   const root = useRef();
-  const { title, published, updated, author, tags } = frontmatter;
-  const { img } = plaiceholder;
+  const {
+    title,
+    published,
+    updated,
+    author: { name },
+    tags,
+  } = frontmatter;
+  const { cover, portrait } = plaiceholders;
   const tagArray = tags?.split(' ');
   const titleSlug = slug(title);
   const syntaxTree = useSyntaxTree(root, title);
@@ -55,7 +67,7 @@ const BlogPostPage: NextPage<Props> = ({
           <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">
             {title}
           </h1>
-          {img && <Image {...img} alt={title} placeholder="blur" />}
+          {cover && <Image {...cover} alt={title} placeholder="blur" />}
           <div className="inline-flex mt-8 mb-4">
             {tagArray &&
               tagArray.map((tag, index) => (
@@ -70,15 +82,16 @@ const BlogPostPage: NextPage<Props> = ({
             <div className="flex items-center">
               <div className="relative inline-flex items-center justify-center flex-shrink-0 gap-2">
                 <Image
-                  src="/images/portrait.png"
+                  {...portrait}
                   alt="author"
+                  className="w-full h-full object-cover rounded-full"
                   width={60}
                   height={60}
-                  className="w-full h-full object-cover rounded-full"
+                  placeholder="blur"
                 />
                 <div className="text-sm">
                   <p>
-                    Written By <span className="font-bold">{author}</span>
+                    Written By <span className="font-bold">{name}</span>
                   </p>
                   <p>
                     Published on{' '}
@@ -111,10 +124,11 @@ const BlogPostPage: NextPage<Props> = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = fs.readdirSync(path.join(process.cwd(), 'contents', 'blog'));
-  const paths = posts.map((post) => ({
+  const res = await fetch(`${API_ENDPOINT}/api/blog/posts`);
+  const data = await res.json();
+  const paths = data.posts.map((post: { frontmatter: { slug: string } }) => ({
     params: {
-      id: post.replace(/\.mdx/, ''),
+      slug: post.frontmatter.slug,
     },
   }));
 
@@ -125,14 +139,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/blog/${params?.id}`
-  );
+  const res = await fetch(`${API_ENDPOINT}/api/blog/${params?.slug}`);
   const { post } = await res.json();
-  const { img, base64 } = await generatePlaiceholder(post.frontmatter.cover);
+  const cover = await generatePlaiceholder(
+    post.frontmatter.cover,
+    '/images/placeholder.jpg'
+  );
+  const portrait = await generatePlaiceholder(
+    post.frontmatter.author.portrait,
+    '/images/portrait.png'
+  );
 
   return {
-    props: { ...post, plaiceholder: { img: { ...img, blurDataURL: base64 } } },
+    props: {
+      ...post,
+      plaiceholders: {
+        cover: { ...cover.img, blurDataURL: cover.base64 },
+        portrait: { ...portrait.img, blurDataURL: portrait.base64 },
+      },
+    },
   };
 };
 
