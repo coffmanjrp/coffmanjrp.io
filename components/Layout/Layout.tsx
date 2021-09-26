@@ -10,7 +10,7 @@ import {
 
 type Props = {
   children: ReactElement;
-  toc?: string[];
+  toc?: { tag: string; innerText: string }[];
 };
 
 const Layout: FC<Props> = ({ children, toc }) => {

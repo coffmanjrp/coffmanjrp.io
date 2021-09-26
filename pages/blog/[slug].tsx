@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
+// @ts-ignore
 import { slug } from 'github-slugger';
 import { Layout, MDXComponents } from '@/components/index';
 import { API_ENDPOINT } from '@/config/index';
@@ -47,7 +48,7 @@ const BlogPostPage: NextPage<Props> = ({
   source,
   plaiceholders,
 }) => {
-  const root = useRef();
+  const root = useRef<HTMLDivElement>(null);
   const {
     title,
     published,

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+// @ts-ignore
 import { slug } from 'github-slugger';
 import { fromDom } from 'hast-util-from-dom';
 

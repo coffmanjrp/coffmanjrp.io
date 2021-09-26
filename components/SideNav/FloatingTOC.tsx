@@ -1,19 +1,20 @@
 import { FC } from 'react';
+// @ts-ignore
 import { slug } from 'github-slugger';
 import { cx } from '@/styles/index';
 
 type Props = {
-  toc: {
+  toc?: {
     tag: string;
     innerText: string;
   }[];
 };
 
 type Indent = {
-  h2: string | undefined;
-  h3: string | undefined;
-  h4: string | undefined;
-  h5: string | undefined;
+  h2?: string;
+  h3?: string;
+  h4?: string;
+  h5?: string;
 };
 
 const FloatingTOC: FC<Props> = ({ toc }) => {

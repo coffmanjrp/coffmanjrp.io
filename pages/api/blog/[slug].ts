@@ -12,9 +12,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const {
-    query: { slug },
-  } = req;
+  const { slug } = req.query;
 
   const strapi = await fetch(`${STRAPI_ENDPOINT}/blogs?slug=${slug}`);
   const strapiData = await strapi.json();

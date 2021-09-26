@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { parseISO, format } from 'date-fns';
 import { Card, Layout } from '@/components/index';
 import { API_ENDPOINT } from '@/config/index';
@@ -79,13 +79,14 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch(`${API_ENDPOINT}/api/blog/posts`);
   const { posts } = await res.json();
   const newPosts = await Promise.all(
     posts.map(async (post: { frontmatter: { cover: string } }) => {
       const { img, base64 } = await generatePlaiceholder(
-        post.frontmatter.cover
+        post.frontmatter.cover,
+        '/images/placeholder.jpg'
       );
 
       return {
