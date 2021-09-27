@@ -2,8 +2,9 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
+// @ts-ignore
 import qs from 'qs';
-import { Card, Layout } from '@/components/index';
+import { Badge, Card, Layout } from '@/components/index';
 import { API_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
@@ -32,10 +33,6 @@ type Props = {
 };
 
 const BlogPage: NextPage<Props> = ({ posts }) => {
-  const tagArray = posts.map(({ frontmatter }) => {
-    return frontmatter.tags?.split(' ');
-  });
-
   return (
     <>
       <Layout>
@@ -68,14 +65,11 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                       {updated ? (
                         <>
                           {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
-                          <span className="inline-block px-1 py-0.5 bg-yellow-500 rounded text-xs text-gray-100">
-                            ❗ Updated
-                          </span>
+                          <Badge scheme="warning">❗ Updated</Badge>
                         </>
                       ) : (
                         format(parseISO(published), 'MMMM dd, yyyy')
                       )}
-
                       <span className="block mt-3">
                         {tagArray &&
                           tagArray.map((tag, index) => (
