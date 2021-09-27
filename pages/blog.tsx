@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import qs from 'qs';
@@ -70,16 +69,6 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                       ) : (
                         format(parseISO(published), 'MMMM dd, yyyy')
                       )}
-                      <span className="block mt-3">
-                        {tagArray &&
-                          tagArray.map((tag, index) => (
-                            <Link key={index} href={`/blog?term=${tag}`}>
-                              <a className="inline-block bg-gray-200 dark:bg-gray-500 px-1 rounded-md mr-1 text-sm leading-5 no-underline select-none text-gray-600 dark:text-gray-100">
-                                # {tag}
-                              </a>
-                            </Link>
-                          ))}
-                      </span>
                     </Card>
                   );
                 }

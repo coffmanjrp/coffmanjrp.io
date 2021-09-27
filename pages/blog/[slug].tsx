@@ -7,7 +7,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import { slug } from 'github-slugger';
-import { Layout, MDXComponents } from '@/components/index';
+import { Layout, MDXComponents, Tag } from '@/components/index';
 import { API_ENDPOINT } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
@@ -72,10 +72,8 @@ const BlogPostPage: NextPage<Props> = ({
           <div className="inline-flex mt-8 mb-4">
             {tagArray &&
               tagArray.map((tag, index) => (
-                <Link key={index} href={`/blog?term=${tag}`}>
-                  <a className="inline-block bg-gray-200 dark:bg-gray-500 px-1 rounded-md mr-1 text-sm leading-5 no-underline select-none text-gray-600 dark:text-gray-100">
-                    # {tag}
-                  </a>
+                <Link key={index} href={`/blog?term=${tag}`} passHref>
+                  <Tag tag={tag} />
                 </Link>
               ))}
           </div>
