@@ -1,11 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+// @ts-ignore
+import qs from 'qs';
 import { STRAPI_ENDPOINT } from '@/config/index';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const strapi = await fetch(`${STRAPI_ENDPOINT}/blogs`);
+  const { term } = req.query;
+
+  const q = qs.stringify({
+    _where: { _or: [{ tags_contains: term }] },
+  });
+
+  const strapi = await fetch(`${STRAPI_ENDPOINT}/blogs?${q}`);
   const strapiData = await strapi.json();
   const strapiSource = strapiData.map(
     (data: {
