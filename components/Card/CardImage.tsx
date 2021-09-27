@@ -1,7 +1,9 @@
 import { FC } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 type Props = {
+  href: string;
   img: {
     src: string;
     width: number;
@@ -12,11 +14,13 @@ type Props = {
   title: string;
 };
 
-const CardImage: FC<Props> = ({ img, title }) => {
+const CardImage: FC<Props> = ({ href, img, title }) => {
   return (
-    <div className="flex-1">
-      <Image {...img} alt={title} placeholder="blur" />
-    </div>
+    <Link href={href}>
+      <a className="flex-1">
+        <Image {...img} alt={title} placeholder="blur" />
+      </a>
+    </Link>
   );
 };
 

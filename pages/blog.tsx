@@ -1,9 +1,12 @@
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import qs from 'qs';
-import { Badge, Card, Layout } from '@/components/index';
+import { FaRegTimesCircle } from 'react-icons/fa';
+import { Badge, Card, Layout, Tag } from '@/components/index';
 import { API_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
@@ -32,6 +35,8 @@ type Props = {
 };
 
 const BlogPage: NextPage<Props> = ({ posts }) => {
+  const router = useRouter();
+
   return (
     <>
       <Layout>
@@ -44,6 +49,20 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               quo natus, illum dolore quod ea dolores accusantium animi nemo
               necessitatibus aliquam?
             </p>
+            {router.query.term && (
+              <div className="flex">
+                <span className="mr-2">Filtered By Tag:</span>
+                <Tag
+                  tag={router.query.term}
+                  href={`/blog?term=${router.query.term}`}
+                />
+                <Link href="/blog">
+                  <a className="p-1 text-base text-red-500 rounded-full cursor-pointer">
+                    <FaRegTimesCircle />
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
             {posts.length > 0 ? (
@@ -57,9 +76,9 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                   return (
                     <Card
                       key={slug}
-                      link={`/blog/${slug}`}
                       img={img}
                       title={title}
+                      href={`/blog/${slug}`}
                     >
                       {updated ? (
                         <>
@@ -69,6 +88,15 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                       ) : (
                         format(parseISO(published), 'MMMM dd, yyyy')
                       )}
+                      <div className="mt-2">
+                        {tagArray?.map((tag, index) => (
+                          <Tag
+                            key={index}
+                            tag={tag}
+                            href={`/blog?term=${tag}`}
+                          />
+                        ))}
+                      </div>
                     </Card>
                   );
                 }

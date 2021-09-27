@@ -1,10 +1,9 @@
 import { FC } from 'react';
-import Link from 'next/link';
 import { cx } from '@/styles/index';
 import { CardImage, CardTitle } from './index';
 
 type Props = {
-  link: string;
+  href: string;
   img: {
     src: string;
     width: number;
@@ -15,15 +14,13 @@ type Props = {
   title: string;
 };
 
-const Card: FC<Props> = ({ link, img, title, children }) => {
+const Card: FC<Props> = ({ href, img, title, children }) => {
   return (
-    <Link href={link}>
-      <a className="flex flex-col border p-4 w-full border-gray-300 dark:border-gray-50 rounded">
-        <CardImage img={img} title={title} />
-        <CardTitle title={title} />
-        <p className={cx('b-paragraph')}>{children}</p>
-      </a>
-    </Link>
+    <div className="flex flex-col border p-4 w-full border-gray-300 dark:border-gray-50 rounded">
+      <CardImage img={img} title={title} href={href} />
+      <CardTitle title={title} href={href} />
+      <p className={cx('b-paragraph')}>{children}</p>
+    </div>
   );
 };
 

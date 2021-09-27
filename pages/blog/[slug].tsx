@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import type { NextPage } from 'next';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
@@ -70,12 +69,9 @@ const BlogPostPage: NextPage<Props> = ({
           </h1>
           {cover && <Image {...cover} alt={title} placeholder="blur" />}
           <div className="inline-flex mt-8 mb-4">
-            {tagArray &&
-              tagArray.map((tag, index) => (
-                <Link key={index} href={`/blog?term=${tag}`} passHref>
-                  <Tag tag={tag} />
-                </Link>
-              ))}
+            {tagArray?.map((tag, index) => (
+              <Tag key={index} tag={tag} href={`/blog?term=${tag}`} />
+            ))}
           </div>
           <div className="flex justify-between md:items-center flex-col md:flex-row mt-2 w-full mb-4">
             <div className="flex items-center">
