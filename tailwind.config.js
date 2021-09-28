@@ -59,5 +59,6 @@ module.exports = {
     require('@tailwindcss/typography')({
       className: 'markdown',
     }),
+    require('@tailwindcss/aspect-ratio'),
   ],
 };

@@ -19,7 +19,7 @@ const Card: FC<Props> = ({ href, img, title, children }) => {
     <div className="flex flex-col border p-4 w-full border-gray-300 dark:border-gray-50 rounded">
       <CardImage img={img} title={title} href={href} />
       <CardTitle title={title} href={href} />
-      <p className={cx('b-paragraph')}>{children}</p>
+      <div className={cx('b-paragraph')}>{children}</div>
     </div>
   );
 };

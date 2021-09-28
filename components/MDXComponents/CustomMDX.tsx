@@ -26,13 +26,14 @@ export const CustomLink: FC<Props> = (props) => {
 
 export const ResponsiveImage: FC<Props> = (props) => {
   return (
-    <Image
-      src={props.src}
-      alt={props.alt}
-      width={700}
-      height={700}
-      layout="responsive"
-      {...props}
-    />
+    <div className="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-900">
+      <Image
+        src={props.src}
+        alt={props.alt}
+        layout="fill"
+        objectFit="contain"
+        {...props}
+      />
+    </div>
   );
 };
