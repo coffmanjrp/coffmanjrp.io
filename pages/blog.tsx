@@ -71,7 +71,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                   frontmatter: { slug, title, updated, published, tags },
                   plaiceholder: { img },
                 }) => {
-                  const tagArray = tags?.split(' ');
+                  const tagArray = tags?.trim().split(',');
 
                   return (
                     <Card
@@ -88,7 +88,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
                       ) : (
                         format(parseISO(published), 'MMMM dd, yyyy')
                       )}
-                      <div className="mt-2">
+                      <div className="flex gap-1 flex-wrap mt-2">
                         {tagArray?.map((tag, index) => (
                           <Tag
                             key={index}

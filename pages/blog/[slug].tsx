@@ -56,7 +56,7 @@ const BlogPostPage: NextPage<Props> = ({
     tags,
   } = frontmatter;
   const { cover, portrait } = plaiceholders;
-  const tagArray = tags?.split(' ');
+  const tagArray = tags?.trim().split(',');
   const titleSlug = slug(title);
   const syntaxTree = useSyntaxTree(root, title);
 
@@ -68,7 +68,7 @@ const BlogPostPage: NextPage<Props> = ({
             {title}
           </h1>
           {cover && <Image {...cover} alt={title} placeholder="blur" />}
-          <div className="inline-flex mt-8 mb-4">
+          <div className="inline-flex gap-1 mt-8 mb-4">
             {tagArray?.map((tag, index) => (
               <Tag key={index} tag={tag} href={`/blog?term=${tag}`} />
             ))}
