@@ -33,15 +33,17 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
             const { tag, innerText } = item;
             const slugger = slug(innerText);
 
+            console.log(tag);
+
             return (
-              <li key={slugger}>
+              <li key={slugger} className={`mb-1.5 ${indent[tag]}`}>
                 <a
                   href={`#${slugger}`}
                   className={cx(
                     'b-link',
+                    'text-sm',
                     'dark:hover:text-gray-400',
-                    'hover:font-semibold',
-                    indent[tag]
+                    'hover:font-semibold'
                   )}
                 >
                   {item.innerText}

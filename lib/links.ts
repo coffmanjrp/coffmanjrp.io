@@ -18,13 +18,13 @@ export const footerLinks: FooterLinks = [
   {
     id: 2,
     label: `Visit to coffmanjrp's Twitter`,
-    url: 'https://twitter.com/',
+    url: 'https://twitter.com/coffmanjrp',
     icon: FaTwitter,
   },
   {
     id: 3,
     label: `Visit to coffmanjrp's Linkedin`,
-    url: 'https://linkedin.com/',
+    url: 'https://www.linkedin.com/in/paul-coffman-jr/',
     icon: FaLinkedin,
   },
   {
