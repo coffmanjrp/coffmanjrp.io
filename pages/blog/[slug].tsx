@@ -7,7 +7,7 @@ import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
-import { API_ENDPOINT } from '@/config/index';
+import { BASE_URL } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 
@@ -59,9 +59,21 @@ const BlogPostPage: NextPage<Props> = ({
   const tagArray = tags?.trim().split(',');
   const titleSlug = slug(title);
   const syntaxTree = useSyntaxTree(root, title);
+  const seo = {
+    title,
+    canonical: `${BASE_URL}/blog/${titleSlug}`,
+    openGraph: {
+      url: `${BASE_URL}/blog/${titleSlug}`,
+      title,
+      images: {
+        url: cover.src,
+        alt: title,
+      },
+    },
+  };
 
   return (
-    <Layout toc={syntaxTree}>
+    <Layout seo={seo} toc={syntaxTree}>
       <article className="w-full max-w-screen-md mx-auto">
         <div className="flex flex-col w-full">
           <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">
@@ -119,7 +131,7 @@ const BlogPostPage: NextPage<Props> = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${API_ENDPOINT}/api/blog/posts`);
+  const res = await fetch(`${BASE_URL}/api/blog/posts`);
   const data = await res.json();
   const paths = data.posts.map((post: { frontmatter: { slug: string } }) => ({
     params: {
@@ -134,7 +146,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(`${API_ENDPOINT}/api/blog/${params?.slug}`);
+  const res = await fetch(`${BASE_URL}/api/blog/${params?.slug}`);
   const { post } = await res.json();
   const cover = await generatePlaiceholder(
     post.frontmatter.cover,

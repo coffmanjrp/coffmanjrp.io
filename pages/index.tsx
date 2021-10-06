@@ -1,13 +1,15 @@
 import type { NextPage } from 'next';
-import { NextSeo } from 'next-seo';
 import { Layout } from '@/components/index';
 import { cx } from '@/styles/index';
 
 const Home: NextPage = () => {
+  const seo = {
+    title: 'Home',
+  };
+
   return (
     <>
-      <NextSeo />
-      <Layout>
+      <Layout seo={seo}>
         <main className={cx('u-main')}>
           <h1 className={cx('b-heading')}>Hi! I’m Paul Coffman Jr.</h1>
           <p className={cx('b-lead', 'my-5', 'text-3xl')}>

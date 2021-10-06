@@ -8,7 +8,7 @@ import { parseISO, format } from 'date-fns';
 import qs from 'qs';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import { Badge, Card, Layout, Tag, SearchBox } from '@/components/index';
-import { API_ENDPOINT } from '@/config/index';
+import { BASE_URL } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
 
@@ -61,6 +61,10 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
   const [term, setTerm] = useState<string>('');
   const [filterdPosts, setFilterdPosts] = useState<FilterdPosts>([]);
   const router = useRouter();
+  const seo = {
+    title: 'Blog',
+    canonical: `${BASE_URL}/blog`,
+  };
 
   useEffect(() => {
     filterPosts();
@@ -78,15 +82,14 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
 
   return (
     <>
-      <Layout>
+      <Layout seo={seo}>
         <main className={cx('u-main')}>
           <div className="relative w-full mb-8">
-            <h1 className={cx('b-heading')}>Blog Posts ({posts.length})</h1>
+            <h1 className={cx('b-heading')}>Blog</h1>
             <p className={cx('b-paragraph', 'my-6')}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro
-              deserunt fugit, nesciunt tempore autem esse molestias in corrupti
-              quo natus, illum dolore quod ea dolores accusantium animi nemo
-              necessitatibus aliquam?
+              There are a total of {posts.length} articles that I have written
+              for this site. You can use the search box below to narrow your
+              search by article title.
             </p>
             <SearchBox term={term} setTerm={setTerm} />
             {router.query.term && (
@@ -155,7 +158,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   query: { term },
 }) => {
   const q = qs.stringify({ term });
-  const res = await fetch(`${API_ENDPOINT}/api/blog/posts?${q}
+  const res = await fetch(`${BASE_URL}/api/blog/posts?${q}
   `);
   const { posts } = await res.json();
   const newPosts = await Promise.all(

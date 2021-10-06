@@ -14,8 +14,8 @@ const SearchBox: FC<Props> = ({ term, setTerm }) => {
       <input
         type="search"
         className="appearance-none border rounded py-2 px-3 leading-tight w-full focus:outline-none focus:ring"
-        aria-label="Search By Post Title"
-        placeholder="Search By Post Title"
+        aria-label="Search Article By Title"
+        placeholder="Search Article By Title"
         spellCheck={false}
         value={term}
         onChange={handleChange}
