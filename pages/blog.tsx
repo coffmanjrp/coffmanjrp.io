@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -6,7 +7,7 @@ import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import qs from 'qs';
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { Badge, Card, Layout, Tag } from '@/components/index';
+import { Badge, Card, Layout, Tag, SearchBox } from '@/components/index';
 import { API_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
@@ -34,8 +35,46 @@ type Props = {
   }[];
 };
 
+type FilterdPosts = {
+  frontmatter: {
+    slug: string;
+    title: string;
+    published: string;
+    updated?: string;
+    author: string;
+    tags?: string;
+    cover: string;
+  };
+  plaiceholder: {
+    img: {
+      src: string;
+      width: number;
+      height: number;
+      type: string;
+      blurDataURL: string;
+    };
+  };
+}[];
+
+// @todo - use React memoization
 const BlogPage: NextPage<Props> = ({ posts }) => {
+  const [term, setTerm] = useState<string>('');
+  const [filterdPosts, setFilterdPosts] = useState<FilterdPosts>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    filterPosts();
+
+    // eslint-disable-next-line
+  }, [term]);
+
+  const filterPosts = () => {
+    const results = posts.filter((post) =>
+      post.frontmatter.title.toLowerCase().includes(term.toLowerCase())
+    );
+
+    setFilterdPosts(results);
+  };
 
   return (
     <>
@@ -49,6 +88,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               quo natus, illum dolore quod ea dolores accusantium animi nemo
               necessitatibus aliquam?
             </p>
+            <SearchBox term={term} setTerm={setTerm} />
             {router.query.term && (
               <div className="flex">
                 <span className="mr-2">Filtered By Tag:</span>
@@ -65,8 +105,8 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
             )}
           </div>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
-            {posts.length > 0 ? (
-              posts.map(
+            {filterdPosts.length > 0 ? (
+              filterdPosts.map(
                 ({
                   frontmatter: { slug, title, updated, published, tags },
                   plaiceholder: { img },

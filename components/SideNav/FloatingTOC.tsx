@@ -27,30 +27,27 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
 
   return (
     <aside className="w-[24vw] hidden md:block text-sm pl-4">
-      <ul className="overflow-y-auto sticky max-h-[calc(100vh-4rem)] top-16 pt-8 pb-10 m-0 list-none">
-        {toc &&
-          toc.map((item) => {
-            const { tag, innerText } = item;
-            const slugger = slug(innerText);
+      <ul className="sticky max-h-[calc(100vh-4rem)] top-16 pt-8 pb-10 m-0 overflow-y-auto">
+        {toc?.map((item) => {
+          const { tag, innerText } = item;
+          const slugger = slug(innerText);
 
-            console.log(tag);
-
-            return (
-              <li key={slugger} className={`mb-1.5 ${indent[tag]}`}>
-                <a
-                  href={`#${slugger}`}
-                  className={cx(
-                    'b-link',
-                    'text-sm',
-                    'dark:hover:text-gray-400',
-                    'hover:font-semibold'
-                  )}
-                >
-                  {item.innerText}
-                </a>
-              </li>
-            );
-          })}
+          return (
+            <li key={slugger} className={`mb-1.5 ${indent[tag]}`}>
+              <a
+                href={`#${slugger}`}
+                className={cx(
+                  'b-link',
+                  'text-sm',
+                  'dark:hover:text-gray-400',
+                  'hover:font-semibold'
+                )}
+              >
+                {item.innerText}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </aside>
   );
