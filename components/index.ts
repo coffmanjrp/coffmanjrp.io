@@ -1,5 +1,6 @@
 export { default as Badge } from './DataDisplay/Badge';
 export { default as Card } from './Card/Card';
+export { default as CardPostsLayout } from './Layout/CardPostsLayout';
 export { default as Container } from './Layout/Container';
 export { default as FloatingTOC } from './SideNav/FloatingTOC';
 export { default as Footer } from './Footer/Footer';

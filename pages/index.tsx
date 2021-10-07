@@ -1,8 +1,35 @@
 import type { NextPage } from 'next';
-import { Layout } from '@/components/index';
+import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import { CardPostsLayout, Layout } from '@/components/index';
+import { BASE_URL } from '@/config/index';
 import { cx } from '@/styles/index';
 
-const Home: NextPage = () => {
+type Props = {
+  posts: {
+    frontmatter: {
+      slug: string;
+      title: string;
+      published: string;
+      updated?: string;
+      author: string;
+      tags?: string;
+      cover: string;
+    };
+    plaiceholder: {
+      img: {
+        src: string;
+        width: number;
+        height: number;
+        type: string;
+        blurDataURL: string;
+      };
+    };
+  }[];
+};
+
+const Home: NextPage<Props> = ({ posts }) => {
+  const slicedPosts = posts.slice(0, 2);
   const seo = {
     title: 'Home',
   };
@@ -16,20 +43,67 @@ const Home: NextPage = () => {
             Frontend, Backend, Web developer
           </p>
           <p className={cx('b-paragraph')}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard dummy
-            text ever since the 1500s, when an unknown printer took a galley of
-            type and scrambled it to make a type specimen book. It has survived
-            not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularised in
-            the 1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop publishing software like
-            Aldus PageMaker including versions of Lorem Ipsum.
+            Hello, I’m Paul Coffman Jr. I’m Frontend, Backend, Web developer.
+            Fluent in English/Japanese. You can contact me on{' '}
+            <a
+              href="https://www.linkedin.com/in/paul-coffman-jr/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={cx('b-link', 'text-blue-600')}
+            >
+              LinkedIn
+            </a>
+            ,{' '}
+            <a
+              href="https://twitter.com/coffmanjrp"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={cx('b-link', 'text-blue-600')}
+            >
+              Twitter
+            </a>
+            , or{' '}
+            <a
+              href="mailto:coffmanjrp@gmail.com?subject=%E3%80%90Mail%20to%20coffmanjrp.io%E3%80%91"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={cx('b-link', 'text-blue-600')}
+            >
+              Email
+            </a>
+            .
           </p>
+          <section id="recent-blog-posts" className="my-10">
+            <h2 className="mb-8 text-4xl font-bold">Recent blog posts</h2>
+            <CardPostsLayout cols={2} posts={slicedPosts} />
+            {slicedPosts.length > 0 && (
+              <Link href="/blog">
+                <a
+                  className={cx(
+                    'b-link',
+                    'inline-block',
+                    'text-blue-600',
+                    'mt-5'
+                  )}
+                >
+                  Read more articles 👉
+                </a>
+              </Link>
+            )}
+          </section>
         </main>
       </Layout>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch(`${BASE_URL}/api/blog/posts`);
+  const { posts } = await res.json();
+
+  return {
+    props: { posts },
+  };
 };
 
 export default Home;

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 // @ts-ignore
 import qs from 'qs';
 import { STRAPI_ENDPOINT } from '@/config/index';
+import { generatePlaiceholder } from '@/lib/plaiceholder';
 
 export default async function handler(
   req: NextApiRequest,
@@ -47,15 +48,25 @@ export default async function handler(
     }
   );
 
-  const posts = strapiSource.sort(
-    (
-      a: { frontmatter: { published: number } },
-      b: { frontmatter: { updated: number } }
-    ) =>
-      Number(new Date(a.frontmatter.published)) <
-      Number(new Date(b.frontmatter.updated))
-        ? 1
-        : -1
+  const postsWithPlaiceholder = await Promise.all(
+    strapiSource.map(async (post: { frontmatter: { cover: string } }) => {
+      const { img, base64 } = await generatePlaiceholder(
+        post.frontmatter.cover,
+        '/images/placeholder.jpg'
+      );
+
+      return {
+        ...post,
+        plaiceholder: { img: { ...img, blurDataURL: base64 } },
+      };
+    })
+  );
+
+  const posts = postsWithPlaiceholder.sort((a, b) =>
+    Number(new Date(a.frontmatter.published)) <
+    Number(new Date(b.frontmatter.updated))
+      ? 1
+      : -1
   );
 
   res.status(200).json({ posts });

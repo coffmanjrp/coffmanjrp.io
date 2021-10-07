@@ -3,13 +3,11 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import qs from 'qs';
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { Badge, Card, Layout, Tag, SearchBox } from '@/components/index';
+import { CardPostsLayout, Layout, Tag, SearchBox } from '@/components/index';
 import { BASE_URL } from '@/config/index';
-import { generatePlaiceholder } from '@/lib/plaiceholder';
 import { cx } from '@/styles/index';
 
 type Props = {
@@ -88,8 +86,8 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
             <h1 className={cx('b-heading')}>Blog</h1>
             <p className={cx('b-paragraph', 'my-6')}>
               There are a total of {posts.length} articles that I have written
-              for this site. You can use the search box below to narrow your
-              search by article title.
+              for this site. You can use the search box below to narrow down
+              your search for article titles.
             </p>
             <SearchBox term={term} setTerm={setTerm} />
             {router.query.term && (
@@ -107,47 +105,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               </div>
             )}
           </div>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
-            {filterdPosts.length > 0 ? (
-              filterdPosts.map(
-                ({
-                  frontmatter: { slug, title, updated, published, tags },
-                  plaiceholder: { img },
-                }) => {
-                  const tagArray = tags?.trim().split(',');
-
-                  return (
-                    <Card
-                      key={slug}
-                      img={img}
-                      title={title}
-                      href={`/blog/${slug}`}
-                    >
-                      {updated ? (
-                        <>
-                          {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
-                          <Badge scheme="warning">❗ Updated</Badge>
-                        </>
-                      ) : (
-                        format(parseISO(published), 'MMMM dd, yyyy')
-                      )}
-                      <div className="flex gap-1 flex-wrap mt-2">
-                        {tagArray?.map((tag, index) => (
-                          <Tag
-                            key={index}
-                            tag={tag}
-                            href={`/blog?term=${tag}`}
-                          />
-                        ))}
-                      </div>
-                    </Card>
-                  );
-                }
-              )
-            ) : (
-              <h3 className="my-10">No Posts 😢</h3>
-            )}
-          </div>
+          <CardPostsLayout cols={2} posts={filterdPosts} />
         </main>
       </Layout>
     </>
@@ -161,22 +119,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   const res = await fetch(`${BASE_URL}/api/blog/posts?${q}
   `);
   const { posts } = await res.json();
-  const newPosts = await Promise.all(
-    posts.map(async (post: { frontmatter: { cover: string } }) => {
-      const { img, base64 } = await generatePlaiceholder(
-        post.frontmatter.cover,
-        '/images/placeholder.jpg'
-      );
-
-      return {
-        ...post,
-        plaiceholder: { img: { ...img, blurDataURL: base64 } },
-      };
-    })
-  );
 
   return {
-    props: { posts: newPosts },
+    props: { posts },
   };
 };
 
