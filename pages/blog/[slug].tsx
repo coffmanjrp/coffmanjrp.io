@@ -64,10 +64,12 @@ const BlogPostPage: NextPage<Props> = ({
     openGraph: {
       url: `${BASE_URL}/blog/${titleSlug}`,
       title,
-      images: {
-        url: cover.src,
-        alt: title,
-      },
+      images: [
+        {
+          url: cover.src,
+          alt: title,
+        },
+      ],
     },
   };
 
