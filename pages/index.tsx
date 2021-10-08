@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { CardPostsLayout, Layout } from '@/components/index';
+import { CardGridLayout, Layout } from '@/components/index';
 import { BASE_URL } from '@/config/index';
 import { cx } from '@/styles/index';
 
@@ -75,7 +75,7 @@ const Home: NextPage<Props> = ({ posts }) => {
           </p>
           <section id="recent-blog-posts" className="my-10">
             <h2 className="mb-8 text-4xl font-bold">Recent blog posts</h2>
-            <CardPostsLayout cols={2} posts={slicedPosts} />
+            <CardGridLayout cols={2} posts={slicedPosts} />
             {slicedPosts.length > 0 && (
               <Link href="/blog">
                 <a

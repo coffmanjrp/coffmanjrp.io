@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { parseISO, format } from 'date-fns';
-import { Badge, Card, Tag } from '@/components/index';
+import { Card, PublishedDate, Tags } from '@/components/index';
 
 type Props = {
   posts: {
@@ -26,12 +25,12 @@ type Props = {
   cols: number;
 };
 
-const CardPostsLayout: FC<Props> = ({ cols, posts }) => {
+const CardGridLayout: FC<Props> = ({ cols, posts }) => {
   return (
     <>
       {posts.length > 0 ? (
         <div
-          className={`grid gap-4 grid-cols-1 sm:grid-cols-${cols} my-2 w-full mt-4`}
+          className={`grid gap-4 grid-cols-1 sm:grid-cols-${cols.toString()} my-2 w-full mt-4`}
         >
           {posts.map(
             ({
@@ -42,19 +41,8 @@ const CardPostsLayout: FC<Props> = ({ cols, posts }) => {
 
               return (
                 <Card key={slug} img={img} title={title} href={`/blog/${slug}`}>
-                  {updated ? (
-                    <>
-                      {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
-                      <Badge scheme="warning">❗ Updated</Badge>
-                    </>
-                  ) : (
-                    format(parseISO(published), 'MMMM dd, yyyy')
-                  )}
-                  <div className="flex gap-1 flex-wrap mt-2">
-                    {tagArray?.map((tag, index) => (
-                      <Tag key={index} tag={tag} href={`/blog?term=${tag}`} />
-                    ))}
-                  </div>
+                  <PublishedDate updated={updated} published={published} />
+                  <Tags tags={tagArray} />
                 </Card>
               );
             }
@@ -67,4 +55,4 @@ const CardPostsLayout: FC<Props> = ({ cols, posts }) => {
   );
 };
 
-export default CardPostsLayout;
+export default CardGridLayout;

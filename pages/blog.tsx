@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 // @ts-ignore
 import qs from 'qs';
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { CardPostsLayout, Layout, Tag, SearchBox } from '@/components/index';
+import { CardGridLayout, Layout, Tag, SearchBox } from '@/components/index';
 import { BASE_URL } from '@/config/index';
 import { cx } from '@/styles/index';
 
@@ -105,7 +105,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               </div>
             )}
           </div>
-          <CardPostsLayout cols={2} posts={filterdPosts} />
+          <CardGridLayout cols={2} posts={filterdPosts} />
         </main>
       </Layout>
     </>

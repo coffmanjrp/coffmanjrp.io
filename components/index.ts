@@ -1,6 +1,6 @@
 export { default as Badge } from './DataDisplay/Badge';
 export { default as Card } from './Card/Card';
-export { default as CardPostsLayout } from './Layout/CardPostsLayout';
+export { default as CardGridLayout } from './Layout/CardGridLayout';
 export { default as Container } from './Layout/Container';
 export { default as FloatingTOC } from './SideNav/FloatingTOC';
 export { default as Footer } from './Footer/Footer';
@@ -8,6 +8,8 @@ export { default as Layout } from './Layout/Layout';
 export { default as MDXComponents } from './MDXComponents/MDXComponents';
 export { default as MobileMenu } from './MobileMenu/MobileMenu';
 export { default as Nav } from './Nav/Nav';
+export { default as PublishedDate } from './DataDisplay/PublishedDate';
 export { default as SearchBox } from './SearchBox/SearchBox';
 export { default as SiteNav } from './SideNav/SiteNav';
 export { default as Tag } from './DataDisplay/Tag';
+export { default as Tags } from './DataDisplay/Tags';
