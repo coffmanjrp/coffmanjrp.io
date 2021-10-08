@@ -17,6 +17,8 @@ type Indent = {
   h5?: string;
 };
 
+type Tag = 'h2' | 'h3' | 'h4' | 'h5';
+
 const FloatingTOC: FC<Props> = ({ toc }) => {
   const indent: Indent = {
     h2: 'ml-4',
@@ -33,7 +35,7 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
           const slugger = slug(innerText);
 
           return (
-            <li key={slugger} className={`mb-1.5 ${indent[tag]}`}>
+            <li key={slugger} className={`mb-1.5 ${indent[tag as Tag]}`}>
               <a
                 href={`#${slugger}`}
                 className={cx(

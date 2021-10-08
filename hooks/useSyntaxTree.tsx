@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 // @ts-ignore
 import { slug } from 'github-slugger';
 import { fromDom } from 'hast-util-from-dom';
 
-const useSyntaxTree = (root, title) => {
-  const [syntaxTree, setSyntaxTree] = useState([]);
+type SyntaxTree = {
+  tag: string;
+  innerText: string;
+}[];
+
+const useSyntaxTree = (root: RefObject<HTMLDivElement>, title: string) => {
+  const [syntaxTree, setSyntaxTree] = useState<SyntaxTree>([]);
   const titleSlug = slug(title);
 
   useEffect(() => {
     const { children } = fromDom(root.current);
-
     const tree = children
       .filter((item: { tagName: string }) => {
         return (

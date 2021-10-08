@@ -4,6 +4,28 @@ import qs from 'qs';
 import { STRAPI_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 
+type StrapiSource = {
+  title: string;
+  published: string;
+  updated: string;
+  user: {
+    username: string;
+    portrait: {
+      url: string;
+    };
+  };
+  tags: string;
+  cover: { formats: { small: { url: string } } };
+  slug: string;
+};
+
+type SortPosts = {
+  frontmatter: {
+    published: number;
+    updated: number;
+  };
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -16,37 +38,23 @@ export default async function handler(
 
   const strapi = await fetch(`${STRAPI_ENDPOINT}/blogs?${q}`);
   const strapiData = await strapi.json();
-  const strapiSource = strapiData.map(
-    (data: {
-      title: string;
-      published: string;
-      updated: string;
-      user: {
-        username: string;
-        portrait: {
-          url: string;
-        };
-      };
-      tags: string;
-      cover: { formats: { small: { url: string } } };
-      slug: string;
-    }) => {
-      return {
-        frontmatter: {
-          title: data.title,
-          published: data.published,
-          updated: data.updated,
-          author: {
-            name: data.user.username,
-            portrait: data.user.portrait.url,
-          },
-          tags: data.tags,
-          cover: data.cover.formats.small.url,
-          slug: data.slug,
+
+  const strapiSource = strapiData.map((data: StrapiSource) => {
+    return {
+      frontmatter: {
+        title: data.title,
+        published: data.published,
+        updated: data.updated,
+        author: {
+          name: data.user.username,
+          portrait: data.user.portrait.url,
         },
-      };
-    }
-  );
+        tags: data.tags,
+        cover: data.cover.formats.small.url,
+        slug: data.slug,
+      },
+    };
+  });
 
   const postsWithPlaiceholder = await Promise.all(
     strapiSource.map(async (post: { frontmatter: { cover: string } }) => {
@@ -63,8 +71,8 @@ export default async function handler(
   );
 
   const posts = postsWithPlaiceholder.sort((a, b) =>
-    Number(new Date(a.frontmatter.published)) <
-    Number(new Date(b.frontmatter.updated))
+    Number(new Date((a as SortPosts).frontmatter.published)) <
+    Number(new Date((b as SortPosts).frontmatter.updated))
       ? 1
       : -1
   );

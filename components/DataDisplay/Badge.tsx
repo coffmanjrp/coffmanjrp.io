@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
-  scheme: string;
+  scheme: 'success' | 'warning' | 'danger';
 };
 
 type ColorScheme = {
