@@ -9,7 +9,6 @@ import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
 import { BASE_URL } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
-import { generatePlaiceholder } from '@/lib/plaiceholder';
 
 type Props = {
   source: {
@@ -148,22 +147,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await fetch(`${BASE_URL}/api/blog/${params?.slug}`);
   const { post } = await res.json();
-  const cover = await generatePlaiceholder(
-    post.frontmatter.cover,
-    '/images/placeholder.jpg'
-  );
-  const portrait = await generatePlaiceholder(
-    post.frontmatter.author.portrait,
-    '/images/portrait.png'
-  );
 
   return {
     props: {
       ...post,
-      plaiceholders: {
-        cover: { ...cover.img, blurDataURL: cover.base64 },
-        portrait: { ...portrait.img, blurDataURL: portrait.base64 },
-      },
     },
   };
 };
