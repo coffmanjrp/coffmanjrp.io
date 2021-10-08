@@ -6,7 +6,14 @@ import { useRouter } from 'next/router';
 // @ts-ignore
 import qs from 'qs';
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { CardGridLayout, Layout, Tag, SearchBox } from '@/components/index';
+import {
+  Card,
+  Layout,
+  PublishedDate,
+  Tag,
+  Tags,
+  SearchBox,
+} from '@/components/index';
 import { BASE_URL } from '@/config/index';
 import { cx } from '@/styles/index';
 
@@ -105,7 +112,34 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
               </div>
             )}
           </div>
-          <CardGridLayout cols={2} posts={filterdPosts} />
+          {filterdPosts.length > 0 ? (
+            <div
+              className={`grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4`}
+            >
+              {filterdPosts.map(
+                ({
+                  frontmatter: { slug, title, updated, published, tags },
+                  plaiceholder: { img },
+                }) => {
+                  const tagArray = tags?.trim().split(',');
+
+                  return (
+                    <Card
+                      key={slug}
+                      img={img}
+                      title={title}
+                      href={`/blog/${slug}`}
+                    >
+                      <PublishedDate updated={updated} published={published} />
+                      <Tags tags={tagArray} />
+                    </Card>
+                  );
+                }
+              )}
+            </div>
+          ) : (
+            <h3 className="my-10 text-2xl">No Posts 😢</h3>
+          )}
         </main>
       </Layout>
     </>

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { CardGridLayout, Layout } from '@/components/index';
+import { Card, Layout, PublishedDate, Tags } from '@/components/index';
 import { BASE_URL } from '@/config/index';
 import { cx } from '@/styles/index';
 
@@ -75,7 +75,37 @@ const Home: NextPage<Props> = ({ posts }) => {
           </p>
           <section id="recent-blog-posts" className="my-10">
             <h2 className="mb-8 text-4xl font-bold">Recent blog posts</h2>
-            <CardGridLayout cols={2} posts={slicedPosts} />
+            {slicedPosts.length > 0 ? (
+              <div
+                className={`grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4`}
+              >
+                {slicedPosts.map(
+                  ({
+                    frontmatter: { slug, title, updated, published, tags },
+                    plaiceholder: { img },
+                  }) => {
+                    const tagArray = tags?.trim().split(',');
+
+                    return (
+                      <Card
+                        key={slug}
+                        img={img}
+                        title={title}
+                        href={`/blog/${slug}`}
+                      >
+                        <PublishedDate
+                          updated={updated}
+                          published={published}
+                        />
+                        <Tags tags={tagArray} />
+                      </Card>
+                    );
+                  }
+                )}
+              </div>
+            ) : (
+              <h3 className="my-10 text-2xl">No Posts 😢</h3>
+            )}
             {slicedPosts.length > 0 && (
               <Link href="/blog">
                 <a
