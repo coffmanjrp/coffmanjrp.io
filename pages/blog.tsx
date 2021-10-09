@@ -3,8 +3,6 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-// @ts-ignore
-import qs from 'qs';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import {
   Card,
@@ -15,6 +13,7 @@ import {
   SearchBox,
 } from '@/components/index';
 import { BASE_URL } from '@/config/index';
+import { getBlogPostsList } from '@/lib/api';
 import { cx } from '@/styles/index';
 
 type Props = {
@@ -149,10 +148,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
 export const getServerSideProps: GetServerSideProps = async ({
   query: { term },
 }) => {
-  const q = qs.stringify({ term });
-  const res = await fetch(`${BASE_URL}/api/blog/posts?${q}
-  `);
-  const { posts } = await res.json();
+  const posts = await getBlogPostsList(term);
 
   return {
     props: { posts },

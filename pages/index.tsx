@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { Card, Layout, PublishedDate, Tags } from '@/components/index';
-import { BASE_URL } from '@/config/index';
+import { getBlogPostsList } from '@/lib/api';
 import { cx } from '@/styles/index';
 
 type Props = {
@@ -128,8 +128,7 @@ const Home: NextPage<Props> = ({ posts }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${BASE_URL}/api/blog/posts`);
-  const { posts } = await res.json();
+  const posts = await getBlogPostsList();
 
   return {
     props: { posts },
