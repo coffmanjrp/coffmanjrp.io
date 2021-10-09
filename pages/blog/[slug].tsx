@@ -9,6 +9,7 @@ import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
 import { BASE_URL } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
+import { getAllBlogPostsSlug, getBlogPost } from '@/lib/api';
 
 type Props = {
   source: {
@@ -132,11 +133,10 @@ const BlogPostPage: NextPage<Props> = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${BASE_URL}/api/blog/posts`);
-  const data = await res.json();
-  const paths = data.posts.map((post: { frontmatter: { slug: string } }) => ({
+  const { blogs } = await getAllBlogPostsSlug();
+  const paths = blogs.map(({ slug }: { slug: string }) => ({
     params: {
-      slug: post.frontmatter.slug,
+      slug,
     },
   }));
 
@@ -147,8 +147,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(`${BASE_URL}/api/blog/${params?.slug}`);
-  const { post } = await res.json();
+  const post = await getBlogPost(params?.slug);
 
   return {
     props: {
