@@ -1,7 +1,8 @@
 import { FC } from 'react';
 // @ts-ignore
 import { slug } from 'github-slugger';
-import { cx } from '@/styles/index';
+import clsx from 'clsx';
+import styles from '@/styles/index';
 
 type Props = {
   toc?: {
@@ -38,8 +39,8 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
             <li key={slugger} className={`mb-1.5 ${indent[tag as Tag]}`}>
               <a
                 href={`#${slugger}`}
-                className={cx(
-                  'b-link',
+                className={clsx(
+                  styles.link.secondary,
                   'text-sm',
                   'dark:hover:text-gray-400',
                   'hover:font-semibold'

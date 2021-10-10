@@ -12,9 +12,10 @@ import {
   Tags,
   SearchBox,
 } from '@/components/index';
+import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getBlogPostsList } from '@/lib/api';
-import { cx } from '@/styles/index';
+import styles from '@/styles/index';
 
 type Props = {
   posts: {
@@ -74,7 +75,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
     filterPosts();
 
     // eslint-disable-next-line
-  }, [term]);
+  }, [term, router]);
 
   const filterPosts = () => {
     const results = posts.filter((post) =>
@@ -87,10 +88,10 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
   return (
     <>
       <Layout seo={seo}>
-        <main className={cx('u-main')}>
+        <main className={clsx(styles.main)}>
           <div className="relative w-full mb-8">
-            <h1 className={cx('b-heading')}>Blog</h1>
-            <p className={cx('b-paragraph', 'my-6')}>
+            <h1 className={clsx(styles.heading)}>Blog</h1>
+            <p className={clsx(styles.paragraph, 'my-6')}>
               There are a total of {posts.length} articles that I have written
               for this site. You can use the search box below to narrow down
               your search for article titles.

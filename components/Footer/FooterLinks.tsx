@@ -1,6 +1,7 @@
 import { FC } from 'react';
+import clsx from 'clsx';
 import { footerLinks } from '@/lib/links';
-import { cx } from '@/styles/index';
+import styles from '@/styles/index';
 
 const FooterLinks: FC = () => {
   return (
@@ -14,7 +15,7 @@ const FooterLinks: FC = () => {
             <a
               key={id}
               href={url}
-              className={cx('b-link', 'text-2xl', 'block')}
+              className={clsx(styles.link.secondary, 'block', 'text-2xl')}
               target="_blank"
               rel="noreferrer noopener"
               aria-label={label}
