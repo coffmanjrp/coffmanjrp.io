@@ -3,11 +3,11 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Card, Layout, PublishedDate, Tags } from '@/components/index';
-import { getBlogPostsList } from '@/lib/api';
+import { getBlogPostsList, getProjectsList } from '@/lib/api';
 import styles from '@/styles/index';
 
 type Props = {
-  posts: {
+  blogPosts: {
     frontmatter: {
       slug: string;
       title: string;
@@ -27,10 +27,28 @@ type Props = {
       };
     };
   }[];
+  projects: {
+    frontmatter: {
+      slug: string;
+      title: string;
+      tags?: string;
+      cover: string;
+    };
+    plaiceholder: {
+      img: {
+        src: string;
+        width: number;
+        height: number;
+        type: string;
+        blurDataURL: string;
+      };
+    };
+  }[];
 };
 
-const Home: NextPage<Props> = ({ posts }) => {
-  const slicedPosts = posts.slice(0, 2);
+const Home: NextPage<Props> = ({ blogPosts, projects }) => {
+  const slicedPosts = blogPosts.slice(0, 2);
+  const slicedProjedcts = projects.slice(0, 2);
   const seo = {
     title: 'Home',
   };
@@ -74,7 +92,7 @@ const Home: NextPage<Props> = ({ posts }) => {
             </a>
             .
           </p>
-          <section id="recent-blog-posts" className="my-10">
+          <section id="recent-blog-posts" className="mt-10 mb-20">
             <h2 className="mb-8 text-4xl font-bold">Recent blog posts</h2>
             {slicedPosts.length > 0 ? (
               <div
@@ -98,7 +116,7 @@ const Home: NextPage<Props> = ({ posts }) => {
                           updated={updated}
                           published={published}
                         />
-                        <Tags tags={tagArray} />
+                        <Tags tags={tagArray} page={'blog'} />
                       </Card>
                     );
                   }
@@ -110,8 +128,46 @@ const Home: NextPage<Props> = ({ posts }) => {
             {slicedPosts.length > 0 && (
               <Link href="/blog">
                 <a className={clsx(styles.link.primary)}>
-                  <span className="inline-block no-underline">👉</span>
-                  Read more articles
+                  Read more articles{' '}
+                  <span className="inline-block no-underline">📰</span>
+                </a>
+              </Link>
+            )}
+          </section>
+          <section id="recent-projects" className="mb-10">
+            <h2 className="mb-8 text-4xl font-bold">Recent Projects</h2>
+            {slicedProjedcts.length > 0 ? (
+              <div
+                className={`grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4`}
+              >
+                {slicedProjedcts.map(
+                  ({
+                    frontmatter: { slug, title, tags },
+                    plaiceholder: { img },
+                  }) => {
+                    const tagArray = tags?.trim().split(',');
+
+                    return (
+                      <Card
+                        key={slug}
+                        img={img}
+                        title={title}
+                        href={'/projects'}
+                      >
+                        <Tags tags={tagArray} page="projects" />
+                      </Card>
+                    );
+                  }
+                )}
+              </div>
+            ) : (
+              <h3 className="my-10 text-2xl">No Projects 😢</h3>
+            )}
+            {slicedProjedcts.length > 0 && (
+              <Link href="/projects">
+                <a className={clsx(styles.link.primary)}>
+                  View more projects{' '}
+                  <span className="inline-block no-underline">✒</span>
                 </a>
               </Link>
             )}
@@ -123,10 +179,11 @@ const Home: NextPage<Props> = ({ posts }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const posts = await getBlogPostsList();
+  const blogPosts = await getBlogPostsList();
+  const projects = await getProjectsList();
 
   return {
-    props: { posts },
+    props: { blogPosts, projects },
   };
 };
 

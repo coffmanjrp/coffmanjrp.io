@@ -258,7 +258,7 @@ type GetProjectsListFrontmatters = {
 export const getProjectsList = async (term?: string | string[]) => {
   const query = await fetchAPI(
     `query($where: JSON) {
-      projects(where: $where) {
+      projects(where: $where, sort: "title:asc") {
         id
         title
         slug
