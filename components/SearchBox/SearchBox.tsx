@@ -3,9 +3,10 @@ import { Dispatch, FC, FormEvent, SetStateAction } from 'react';
 type Props = {
   term: string;
   setTerm: Dispatch<SetStateAction<string>>;
+  placeholder: string;
 };
 
-const SearchBox: FC<Props> = ({ term, setTerm }) => {
+const SearchBox: FC<Props> = ({ term, setTerm, placeholder }) => {
   const handleChange = (e: FormEvent) =>
     setTerm((e.target as HTMLInputElement).value);
 
@@ -14,8 +15,8 @@ const SearchBox: FC<Props> = ({ term, setTerm }) => {
       <input
         type="search"
         className="appearance-none border rounded py-2 px-3 leading-tight w-full focus:outline-none focus:ring"
-        aria-label="Search Article By Title"
-        placeholder="Search Article By Title"
+        aria-label={placeholder}
+        placeholder={placeholder}
         spellCheck={false}
         value={term}
         onChange={handleChange}

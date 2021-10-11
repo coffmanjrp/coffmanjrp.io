@@ -1,12 +1,12 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
-import { generatePlaiceholder } from '@/lib/plaiceholder';
 // @ts-ignore
 import mdxPrism from 'mdx-prism';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import { STRAPI_ENDPOINT } from '@/config/index';
+import { generatePlaiceholder } from '@/lib/plaiceholder';
 
 export const fetchAPI = async (query: string, { variables }: any = {}) => {
   try {
@@ -26,7 +26,7 @@ export const fetchAPI = async (query: string, { variables }: any = {}) => {
   }
 };
 
-type Frontmatters = {
+type GetBlogPostsListFrontmatters = {
   title: string;
   slug: string;
   published: string;
@@ -46,7 +46,7 @@ type Frontmatters = {
   };
 };
 
-type SortPosts = {
+type GetBlogPostsListSortPosts = {
   frontmatter: {
     published: number;
     updated: number;
@@ -80,7 +80,7 @@ export const getBlogPostsList = async (term?: string | string[]) => {
   );
   const { blogs } = query;
 
-  const frontmatters = await blogs.map((data: Frontmatters) => {
+  const frontmatters = await blogs.map((data: GetBlogPostsListFrontmatters) => {
     return {
       frontmatter: {
         title: data.title,
@@ -121,8 +121,8 @@ export const getBlogPostsList = async (term?: string | string[]) => {
   );
 
   const posts = FrontmattersWithPlaiceholders.sort((a, b) =>
-    Number(new Date((a as SortPosts).frontmatter.published)) <
-    Number(new Date((b as SortPosts).frontmatter.updated))
+    Number(new Date((a as GetBlogPostsListSortPosts).frontmatter.published)) <
+    Number(new Date((b as GetBlogPostsListSortPosts).frontmatter.updated))
       ? 1
       : -1
   );
@@ -142,7 +142,7 @@ export const getAllBlogPostsSlug = async () => {
   return query;
 };
 
-type Source = {
+type GetBlogPostSource = {
   markdown: string;
   title: string;
   published: string;
@@ -186,7 +186,7 @@ export const getBlogPost = async (slug?: string | string[]) => {
   );
   const { blogs } = query;
 
-  const source = blogs.map((data: Source) => {
+  const source = blogs.map((data: GetBlogPostSource) => {
     return {
       content: data.markdown,
       data: {
@@ -244,4 +244,69 @@ export const getBlogPost = async (slug?: string | string[]) => {
   };
 
   return post;
+};
+
+type GetProjectsListFrontmatters = {
+  id: number;
+  title: string;
+  slug: string;
+  links: string;
+  tags: string;
+  cover: { id: number; url: string };
+};
+
+export const getProjectsList = async (term?: string | string[]) => {
+  const query = await fetchAPI(
+    `query($where: JSON) {
+      projects(where: $where) {
+        id
+        title
+        slug
+        tags
+        links
+        cover {
+          id
+          url
+        }
+      },
+    }`,
+    { variables: { where: { tags_contains: term } } }
+  );
+  const { projects } = query;
+
+  const frontmatters = await projects.map(
+    (data: GetProjectsListFrontmatters) => {
+      return {
+        frontmatter: {
+          id: data.id,
+          title: data.title,
+          slug: data.slug,
+          tags: data.tags,
+          links: data.links,
+          cover: {
+            id: data.cover.id,
+            url: data.cover.url,
+          },
+        },
+      };
+    }
+  );
+
+  const posts = await Promise.all(
+    frontmatters.map(
+      async (data: { frontmatter: { cover: { url: string } } }) => {
+        const { img, base64 } = await generatePlaiceholder(
+          data.frontmatter.cover.url,
+          '/images/placeholder.jpg'
+        );
+
+        return {
+          ...data,
+          plaiceholder: { img: { ...img, blurDataURL: base64 } },
+        };
+      }
+    )
+  );
+
+  return posts;
 };

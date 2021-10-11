@@ -47,15 +47,15 @@ export const navLinks: NavLinks = [
     title: 'Blog',
     path: '/blog',
   },
-  // {
-  //   id: 2,
-  //   title: 'Docs',
-  //   path: '/docs',
-  // },
+  {
+    id: 2,
+    title: 'Projects',
+    path: '/projects',
+  },
   // {
   //   id: 3,
-  //   title: 'Projects',
-  //   path: '/projects',
+  //   title: 'Docs',
+  //   path: '/docs',
   // },
   // {
   //   id: 4,
