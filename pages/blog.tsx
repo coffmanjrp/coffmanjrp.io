@@ -93,7 +93,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
     minContentIndex,
     maxContentIndex,
   } = usePagenation({
-    contentPerPage: 4,
+    contentPerPage: 10,
     count: filterdPosts.length + 1,
     min: 0,
     max: 5,
@@ -190,7 +190,7 @@ const BlogPage: NextPage<Props> = ({ posts }) => {
           ) : (
             <h3 className="my-10 text-2xl">No Posts 😢</h3>
           )}
-          <Pagenation filterdPosts={filterdPosts} {...pagenationProps} />
+          <Pagenation {...pagenationProps} />
         </main>
       </Layout>
     </>

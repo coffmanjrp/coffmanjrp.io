@@ -1,13 +1,21 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState, SetStateAction } from 'react';
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { Card, Layout, Tag, Tags, SearchBox } from '@/components/index';
+import {
+  Card,
+  Layout,
+  Pagenation,
+  Tag,
+  Tags,
+  SearchBox,
+} from '@/components/index';
 import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getProjectsList } from '@/lib/api';
+import usePagenation from '@/hooks/usePagenation';
 import styles from '@/styles/index';
 
 type Props = {
@@ -48,11 +56,52 @@ type FilterdPosts = {
   };
 }[];
 
+type PagenationProps = {
+  count: number;
+  contentPerPage: number;
+  totalPageCount: number[];
+  prevPage: () => void;
+  nextPage: () => void;
+  currentPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  minContentIndex: number;
+  maxContentIndex: number;
+};
+
 // @todo - use React memoization
 const BlogPage: NextPage<Props> = ({ projects }) => {
   const [term, setTerm] = useState<string>('');
   const [filterdPosts, setFilterdPosts] = useState<FilterdPosts>([]);
   const router = useRouter();
+  const {
+    count,
+    contentPerPage,
+    totalPageCount,
+    prevPage,
+    nextPage,
+    currentPage,
+    setCurrentPage,
+    firstContentIndex,
+    lastContentIndex,
+    minContentIndex,
+    maxContentIndex,
+  } = usePagenation({
+    contentPerPage: 10,
+    count: filterdPosts.length + 1,
+    min: 0,
+    max: 5,
+  });
+  const pagenationProps: PagenationProps = {
+    count,
+    contentPerPage,
+    totalPageCount,
+    prevPage,
+    nextPage,
+    currentPage,
+    setCurrentPage,
+    minContentIndex,
+    maxContentIndex,
+  };
   const seo = {
     title: 'Projects',
     canonical: `${BASE_URL}/projects`,
@@ -104,24 +153,32 @@ const BlogPage: NextPage<Props> = ({ projects }) => {
           </div>
           {filterdPosts.length > 0 ? (
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
-              {filterdPosts.map(
-                ({
-                  frontmatter: { slug, title, tags },
-                  plaiceholder: { img },
-                }) => {
-                  const tagArray = tags?.trim().split(',');
+              {filterdPosts
+                .slice(firstContentIndex, lastContentIndex)
+                .map(
+                  ({
+                    frontmatter: { slug, title, tags },
+                    plaiceholder: { img },
+                  }) => {
+                    const tagArray = tags?.trim().split(',');
 
-                  return (
-                    <Card key={slug} img={img} title={title} href={'/projects'}>
-                      <Tags tags={tagArray} page="projects" />
-                    </Card>
-                  );
-                }
-              )}
+                    return (
+                      <Card
+                        key={slug}
+                        img={img}
+                        title={title}
+                        href={'/projects'}
+                      >
+                        <Tags tags={tagArray} page="projects" />
+                      </Card>
+                    );
+                  }
+                )}
             </div>
           ) : (
             <h3 className="my-10 text-2xl">No Projects 😢</h3>
           )}
+          <Pagenation {...pagenationProps} />
         </main>
       </Layout>
     </>
