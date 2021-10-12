@@ -7,6 +7,7 @@ export { default as Layout } from './Layout/Layout';
 export { default as MDXComponents } from './MDXComponents/MDXComponents';
 export { default as MobileMenu } from './MobileMenu/MobileMenu';
 export { default as Nav } from './Nav/Nav';
+export { default as Pagenation } from './Pagenation/Pagenation';
 export { default as PublishedDate } from './DataDisplay/PublishedDate';
 export { default as SearchBox } from './SearchBox/SearchBox';
 export { default as SiteNav } from './SideNav/SiteNav';

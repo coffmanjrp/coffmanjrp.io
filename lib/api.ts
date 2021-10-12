@@ -27,6 +27,7 @@ export const fetchAPI = async (query: string, { variables }: any = {}) => {
 };
 
 type GetBlogPostsListFrontmatters = {
+  id: number;
   title: string;
   slug: string;
   published: string;
@@ -46,7 +47,7 @@ type GetBlogPostsListFrontmatters = {
   };
 };
 
-type GetBlogPostsListSortPosts = {
+type GetBlogPostsListSortedPosts = {
   frontmatter: {
     published: number;
     updated: number;
@@ -57,6 +58,7 @@ export const getBlogPostsList = async (term?: string | string[]) => {
   const query = await fetchAPI(
     `query($where: JSON) {
       blogs(where: $where) {
+        id
         title
         slug
         published
@@ -83,6 +85,7 @@ export const getBlogPostsList = async (term?: string | string[]) => {
   const frontmatters = await blogs.map((data: GetBlogPostsListFrontmatters) => {
     return {
       frontmatter: {
+        id: data.id,
         title: data.title,
         slug: data.slug,
         published: data.published,
@@ -104,7 +107,7 @@ export const getBlogPostsList = async (term?: string | string[]) => {
     };
   });
 
-  const FrontmattersWithPlaiceholders = await Promise.all(
+  const frontmattersWithPlaiceholders = await Promise.all(
     frontmatters.map(
       async (data: { frontmatter: { cover: { url: string } } }) => {
         const { img, base64 } = await generatePlaiceholder(
@@ -120,9 +123,9 @@ export const getBlogPostsList = async (term?: string | string[]) => {
     )
   );
 
-  const posts = FrontmattersWithPlaiceholders.sort((a, b) =>
-    Number(new Date((a as GetBlogPostsListSortPosts).frontmatter.published)) <
-    Number(new Date((b as GetBlogPostsListSortPosts).frontmatter.updated))
+  const posts = frontmattersWithPlaiceholders.sort((a, b) =>
+    Number(new Date((a as GetBlogPostsListSortedPosts).frontmatter.published)) <
+    Number(new Date((b as GetBlogPostsListSortedPosts).frontmatter.updated))
       ? 1
       : -1
   );
