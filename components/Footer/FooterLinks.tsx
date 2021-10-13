@@ -15,7 +15,7 @@ const FooterLinks: FC = () => {
             <a
               key={id}
               href={url}
-              className={clsx(styles.link.secondary, 'block', 'text-2xl')}
+              className={clsx(styles.link.icon)}
               target="_blank"
               rel="noreferrer noopener"
               aria-label={label}

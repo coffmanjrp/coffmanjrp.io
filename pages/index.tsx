@@ -128,8 +128,8 @@ const Home: NextPage<Props> = ({ blogPosts, projects }) => {
             {slicedPosts.length > 0 && (
               <Link href="/blog">
                 <a className={clsx(styles.link.primary)}>
-                  Read more articles{' '}
-                  <span className="inline-block no-underline">📰</span>
+                  Read more articles
+                  <span className="inline-block ml-1 no-underline">📰</span>
                 </a>
               </Link>
             )}
@@ -166,8 +166,8 @@ const Home: NextPage<Props> = ({ blogPosts, projects }) => {
             {slicedProjedcts.length > 0 && (
               <Link href="/projects">
                 <a className={clsx(styles.link.primary)}>
-                  View more projects{' '}
-                  <span className="inline-block no-underline">✒</span>
+                  View more projects
+                  <span className="inline-block ml-1 no-underline">✒</span>
                 </a>
               </Link>
             )}

@@ -1,26 +1,11 @@
 const styles = {
-  heading: ['text-5xl', 'font-bold', 'gray-900', 'dark:text-gray-100'],
+  heading: ['text-5xl', 'font-bold', 'text-gray-900', 'dark:text-gray-100'],
   paragraph: ['text-base', 'text-gray-600', 'dark:text-gray-100'],
   lead: ['font-semibold', 'text-gray-600', 'dark:text-gray-100'],
   link: {
-    primary: [
-      'text-base',
-      'text-blue-600',
-      'dark:text-gray-100',
-      'underline',
-      'hover:opacity-75',
-      'focus:outline-none',
-      'focus:ring',
-    ],
-    secondary: [
-      'text-base',
-      'text-gray-600',
-      'dark:text-gray-100',
-      'no-underline',
-      'hover:opacity-75',
-      'focus:outline-none',
-      'focus:ring',
-    ],
+    primary: ['link', 'link-primary'],
+    secondary: ['link', 'link-secondary'],
+    icon: ['link', 'icon-link'],
   },
   main: ['w-full', 'max-w-screen-md', 'mx-auto'],
   footer: [
