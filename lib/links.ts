@@ -1,12 +1,5 @@
-import { IconType } from 'react-icons';
 import { FaEnvelope, FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
-
-type FooterLinks = {
-  id: number;
-  label: string;
-  url: string;
-  icon: IconType;
-}[];
+import { FooterLinks, NavLinks } from './types';
 
 export const footerLinks: FooterLinks = [
   {
@@ -34,12 +27,6 @@ export const footerLinks: FooterLinks = [
     icon: FaEnvelope,
   },
 ];
-
-type NavLinks = {
-  id: number;
-  title: string;
-  path: string;
-}[];
 
 export const navLinks: NavLinks = [
   {

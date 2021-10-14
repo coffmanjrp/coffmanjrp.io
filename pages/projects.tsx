@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useState, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -15,63 +15,14 @@ import {
 import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getProjectsList } from '@/lib/api';
+import { FilterdProjects, PagenationProps, ProjectsProps } from '@/lib/types';
 import usePagenation from '@/hooks/usePagenation';
 import styles from '@/styles/index';
 
-type Props = {
-  projects: {
-    frontmatter: {
-      slug: string;
-      title: string;
-      tags?: string;
-      cover: string;
-    };
-    plaiceholder: {
-      img: {
-        src: string;
-        width: number;
-        height: number;
-        type: string;
-        blurDataURL: string;
-      };
-    };
-  }[];
-};
-
-type FilterdPosts = {
-  frontmatter: {
-    slug: string;
-    title: string;
-    tags?: string;
-    cover: string;
-  };
-  plaiceholder: {
-    img: {
-      src: string;
-      width: number;
-      height: number;
-      type: string;
-      blurDataURL: string;
-    };
-  };
-}[];
-
-type PagenationProps = {
-  count: number;
-  contentPerPage: number;
-  totalPageCount: number[];
-  prevPage: () => void;
-  nextPage: () => void;
-  currentPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  minContentIndex: number;
-  maxContentIndex: number;
-};
-
 // @todo - use React memoization
-const BlogPage: NextPage<Props> = ({ projects }) => {
+const BlogPage: NextPage<ProjectsProps> = ({ projects }) => {
   const [term, setTerm] = useState<string>('');
-  const [filterdPosts, setFilterdPosts] = useState<FilterdPosts>([]);
+  const [filterdPosts, setFilterdPosts] = useState<FilterdProjects>([]);
   const router = useRouter();
   const {
     count,

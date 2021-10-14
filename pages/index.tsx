@@ -5,48 +5,9 @@ import clsx from 'clsx';
 import { Card, Layout, PublishedDate, Tags } from '@/components/index';
 import { getBlogPostsList, getProjectsList } from '@/lib/api';
 import styles from '@/styles/index';
+import { ALlDataProps } from '@/lib/types';
 
-type Props = {
-  blogPosts: {
-    frontmatter: {
-      slug: string;
-      title: string;
-      published: string;
-      updated?: string;
-      author: string;
-      tags?: string;
-      cover: string;
-    };
-    plaiceholder: {
-      img: {
-        src: string;
-        width: number;
-        height: number;
-        type: string;
-        blurDataURL: string;
-      };
-    };
-  }[];
-  projects: {
-    frontmatter: {
-      slug: string;
-      title: string;
-      tags?: string;
-      cover: string;
-    };
-    plaiceholder: {
-      img: {
-        src: string;
-        width: number;
-        height: number;
-        type: string;
-        blurDataURL: string;
-      };
-    };
-  }[];
-};
-
-const Home: NextPage<Props> = ({ blogPosts, projects }) => {
+const Home: NextPage<ALlDataProps> = ({ blogPosts, projects }) => {
   const slicedPosts = blogPosts.slice(0, 2);
   const slicedProjedcts = projects.slice(0, 2);
   const seo = {

@@ -5,6 +5,10 @@ import remarkUnwrapImages from 'remark-unwrap-images';
 import mdxPrism from 'mdx-prism';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
+import {
+  GetBlogPostsListFrontmatters,
+  GetBlogPostsListSortedPosts,
+} from './types';
 import { STRAPI_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 
@@ -24,34 +28,6 @@ export const fetchAPI = async (query: string, { variables }: any = {}) => {
     console.error(error);
     throw new Error('Failed to fetch API');
   }
-};
-
-type GetBlogPostsListFrontmatters = {
-  id: number;
-  title: string;
-  slug: string;
-  published: string;
-  updated: string;
-  user: {
-    id: number;
-    username: string;
-    portrait: {
-      id: number;
-      url: string;
-    };
-  };
-  tags: string;
-  cover: {
-    id: number;
-    url: string;
-  };
-};
-
-type GetBlogPostsListSortedPosts = {
-  frontmatter: {
-    published: number;
-    updated: number;
-  };
 };
 
 export const getBlogPostsList = async (term?: string | string[]) => {

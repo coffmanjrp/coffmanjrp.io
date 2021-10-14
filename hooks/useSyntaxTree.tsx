@@ -2,17 +2,14 @@ import { useEffect, useState, RefObject } from 'react';
 // @ts-ignore
 import { slug } from 'github-slugger';
 import { fromDom } from 'hast-util-from-dom';
-
-type SyntaxTree = {
-  tag: string;
-  innerText: string;
-}[];
+import { SyntaxTree } from '@/lib/types';
 
 const useSyntaxTree = (root: RefObject<HTMLDivElement>, title: string) => {
   const [syntaxTree, setSyntaxTree] = useState<SyntaxTree>([]);
   const titleSlug = slug(title);
 
   useEffect(() => {
+    // @ts-ignore
     const { children } = fromDom(root.current);
     const tree = children
       .filter((item: { tagName: string }) => {

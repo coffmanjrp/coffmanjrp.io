@@ -16,69 +16,14 @@ import {
 import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getBlogPostsList } from '@/lib/api';
+import { BlogPostsProps, FilterdBlogPosts, PagenationProps } from '@/lib/types';
 import usePagenation from '@/hooks/usePagenation';
 import styles from '@/styles/index';
 
-type Props = {
-  posts: {
-    frontmatter: {
-      slug: string;
-      title: string;
-      published: string;
-      updated?: string;
-      author: string;
-      tags?: string;
-      cover: string;
-    };
-    plaiceholder: {
-      img: {
-        src: string;
-        width: number;
-        height: number;
-        type: string;
-        blurDataURL: string;
-      };
-    };
-  }[];
-};
-
-type FilterdPosts = {
-  frontmatter: {
-    slug: string;
-    title: string;
-    published: string;
-    updated?: string;
-    author: string;
-    tags?: string;
-    cover: string;
-  };
-  plaiceholder: {
-    img: {
-      src: string;
-      width: number;
-      height: number;
-      type: string;
-      blurDataURL: string;
-    };
-  };
-}[];
-
-type PagenationProps = {
-  count: number;
-  contentPerPage: number;
-  totalPageCount: number[];
-  prevPage: () => void;
-  nextPage: () => void;
-  currentPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  minContentIndex: number;
-  maxContentIndex: number;
-};
-
 // @todo - use React memoization
-const BlogPage: NextPage<Props> = ({ posts }) => {
+const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
   const [term, setTerm] = useState<string>('');
-  const [filterdPosts, setFilterdPosts] = useState<FilterdPosts>([]);
+  const [filterdPosts, setFilterdPosts] = useState<FilterdBlogPosts>([]);
   const router = useRouter();
   const {
     count,

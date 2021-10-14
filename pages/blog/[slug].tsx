@@ -7,42 +7,12 @@ import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
+import { getAllBlogPostsSlug, getBlogPost } from '@/lib/api';
+import { BlogPostProps } from '@/lib/types';
 import { BASE_URL } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
-import { getAllBlogPostsSlug, getBlogPost } from '@/lib/api';
 
-type Props = {
-  source: {
-    compiledSource: string;
-    scope: {};
-  };
-  frontmatter: {
-    slug: string;
-    title: string;
-    published: string;
-    updated?: string;
-    author: { name: string; portrait: string };
-    tags?: string;
-  };
-  plaiceholders: {
-    cover: {
-      src: string;
-      width: number;
-      height: number;
-      type: string;
-      blurDataURL: string;
-    };
-    portrait: {
-      src: string;
-      width: number;
-      height: number;
-      type: string;
-      blurDataURL: string;
-    };
-  };
-};
-
-const BlogPostPage: NextPage<Props> = ({
+const BlogPostPage: NextPage<BlogPostProps> = ({
   frontmatter,
   source,
   plaiceholders,
