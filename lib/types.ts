@@ -200,13 +200,6 @@ export type GetBlogPostsListFrontmatters = {
   };
 };
 
-export type GetBlogPostsListSortedPosts = {
-  frontmatter: {
-    published: number;
-    updated: number;
-  };
-};
-
 export type SyntaxTree = {
   tag: string;
   innerText: string;

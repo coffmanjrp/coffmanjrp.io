@@ -5,10 +5,7 @@ import remarkUnwrapImages from 'remark-unwrap-images';
 import mdxPrism from 'mdx-prism';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
-import {
-  GetBlogPostsListFrontmatters,
-  GetBlogPostsListSortedPosts,
-} from './types';
+import { GetBlogPostsListFrontmatters } from './types';
 import { STRAPI_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 
@@ -33,7 +30,7 @@ export const fetchAPI = async (query: string, { variables }: any = {}) => {
 export const getBlogPostsList = async (term?: string | string[]) => {
   const query = await fetchAPI(
     `query($where: JSON) {
-      blogs(where: $where) {
+      blogs(where: $where, sort: "published:desc") {
         id
         title
         slug
@@ -70,20 +67,20 @@ export const getBlogPostsList = async (term?: string | string[]) => {
           id: data.user.id,
           name: data.user.username,
           portrait: {
-            id: data.user.portrait.id,
-            url: data.user.portrait.url,
+            id: data.user.portrait ? data.user.portrait.id : null,
+            url: data.user.portrait ? data.user.portrait.url : null,
           },
         },
         tags: data.tags,
         cover: {
-          id: data.cover.id,
-          url: data.cover.url,
+          id: data.cover ? data.cover.id : null,
+          url: data.cover ? data.cover.url : null,
         },
       },
     };
   });
 
-  const frontmattersWithPlaiceholders = await Promise.all(
+  const posts = await Promise.all(
     frontmatters.map(
       async (data: { frontmatter: { cover: { url: string } } }) => {
         const { img, base64 } = await generatePlaiceholder(
@@ -97,13 +94,6 @@ export const getBlogPostsList = async (term?: string | string[]) => {
         };
       }
     )
-  );
-
-  const posts = frontmattersWithPlaiceholders.sort((a, b) =>
-    Number(new Date((a as GetBlogPostsListSortedPosts).frontmatter.published)) <
-    Number(new Date((b as GetBlogPostsListSortedPosts).frontmatter.updated))
-      ? 1
-      : -1
   );
 
   return posts;
@@ -174,10 +164,10 @@ export const getBlogPost = async (slug?: string | string[]) => {
         updated: data.updated,
         author: {
           name: data.user.username,
-          portrait: data.user.portrait.url,
+          portrait: data.user.portrait ? data.user.portrait.url : null,
         },
         tags: data.tags,
-        cover: data.cover.url,
+        cover: data.cover ? data.cover.url : null,
       },
     };
   });
@@ -263,8 +253,8 @@ export const getProjectsList = async (term?: string | string[]) => {
           tags: data.tags,
           links: data.links,
           cover: {
-            id: data.cover.id,
-            url: data.cover.url,
+            id: data.cover ? data.cover.id : null,
+            url: data.cover ? data.cover.url : null,
           },
         },
       };
