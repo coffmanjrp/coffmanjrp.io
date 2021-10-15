@@ -5,7 +5,7 @@ import remarkUnwrapImages from 'remark-unwrap-images';
 import mdxPrism from 'mdx-prism';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
-import { GetBlogPostsListFrontmatters } from './types';
+import { GetArticleListFrontmatters, GetArticleSource } from './types';
 import { STRAPI_ENDPOINT } from '@/config/index';
 import { generatePlaiceholder } from '@/lib/plaiceholder';
 
@@ -27,10 +27,10 @@ export const fetchAPI = async (query: string, { variables }: any = {}) => {
   }
 };
 
-export const getBlogPostsList = async (term?: string | string[]) => {
+export const getArticleList = async (term?: string | string[]) => {
   const query = await fetchAPI(
     `query($where: JSON) {
-      blogs(where: $where, sort: "published:desc") {
+      articles(where: $where, sort: "published:desc") {
         id
         title
         slug
@@ -53,32 +53,34 @@ export const getBlogPostsList = async (term?: string | string[]) => {
     }`,
     { variables: { where: { tags_contains: term } } }
   );
-  const { blogs } = query;
+  const { articles } = query;
 
-  const frontmatters = await blogs.map((data: GetBlogPostsListFrontmatters) => {
-    return {
-      frontmatter: {
-        id: data.id,
-        title: data.title,
-        slug: data.slug,
-        published: data.published,
-        updated: data.updated,
-        author: {
-          id: data.user.id,
-          name: data.user.username,
-          portrait: {
-            id: data.user.portrait ? data.user.portrait.id : null,
-            url: data.user.portrait ? data.user.portrait.url : null,
+  const frontmatters = await articles.map(
+    (data: GetArticleListFrontmatters) => {
+      return {
+        frontmatter: {
+          id: data.id,
+          title: data.title,
+          slug: data.slug,
+          published: data.published,
+          updated: data.updated,
+          author: {
+            id: data.user.id,
+            name: data.user.username,
+            portrait: {
+              id: data.user.portrait ? data.user.portrait.id : null,
+              url: data.user.portrait ? data.user.portrait.url : null,
+            },
+          },
+          tags: data.tags,
+          cover: {
+            id: data.cover ? data.cover.id : null,
+            url: data.cover ? data.cover.url : null,
           },
         },
-        tags: data.tags,
-        cover: {
-          id: data.cover ? data.cover.id : null,
-          url: data.cover ? data.cover.url : null,
-        },
-      },
-    };
-  });
+      };
+    }
+  );
 
   const posts = await Promise.all(
     frontmatters.map(
@@ -99,10 +101,10 @@ export const getBlogPostsList = async (term?: string | string[]) => {
   return posts;
 };
 
-export const getAllBlogPostsSlug = async () => {
+export const getAllArticleSlug = async () => {
   const query = await fetchAPI(
     `query {
-      blogs {
+      articles {
         slug
       },
     }`
@@ -111,27 +113,10 @@ export const getAllBlogPostsSlug = async () => {
   return query;
 };
 
-type GetBlogPostSource = {
-  markdown: string;
-  title: string;
-  published: string;
-  updated: string;
-  user: {
-    id: number;
-    username: string;
-    portrait: {
-      id: number;
-      url: string;
-    };
-  };
-  tags: string;
-  cover: { id: number; url: string };
-};
-
-export const getBlogPost = async (slug?: string | string[]) => {
+export const getArticle = async (slug?: string | string[]) => {
   const query = await fetchAPI(
     `query($where: JSON) {
-      blogs(where: $where) {
+      articles(where: $where) {
         title
         markdown
         published
@@ -153,9 +138,9 @@ export const getBlogPost = async (slug?: string | string[]) => {
     }`,
     { variables: { where: { slug } } }
   );
-  const { blogs } = query;
+  const { articles } = query;
 
-  const source = blogs.map((data: GetBlogPostSource) => {
+  const source = articles.map((data: GetArticleSource) => {
     return {
       content: data.markdown,
       data: {

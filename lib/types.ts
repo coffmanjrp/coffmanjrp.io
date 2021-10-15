@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction } from 'react';
 import { IconType } from 'react-icons';
 
 export type ALlDataProps = {
-  blogPosts: {
+  articles: {
     frontmatter: {
       slug: string;
       title: string;
       published: string;
-      updated?: string;
+      updated: boolean;
       author: string;
       tags?: string;
       cover: string;
@@ -41,13 +41,13 @@ export type ALlDataProps = {
   }[];
 };
 
-export type BlogPostsProps = {
+export type ArticlesProps = {
   posts: {
     frontmatter: {
       slug: string;
       title: string;
       published: string;
-      updated?: string;
+      updated: boolean;
       author: string;
       tags?: string;
       cover: string;
@@ -64,7 +64,7 @@ export type BlogPostsProps = {
   }[];
 };
 
-export type BlogPostProps = {
+export type ArticleProps = {
   source: {
     compiledSource: string;
     scope: {};
@@ -73,7 +73,7 @@ export type BlogPostProps = {
     slug: string;
     title: string;
     published: string;
-    updated?: string;
+    updated: boolean;
     author: { name: string; portrait: string };
     tags?: string;
   };
@@ -115,12 +115,12 @@ export type ProjectsProps = {
   }[];
 };
 
-export type FilterdBlogPosts = {
+export type FilterdArticlePosts = {
   frontmatter: {
     slug: string;
     title: string;
     published: string;
-    updated?: string;
+    updated: boolean;
     author: string;
     tags?: string;
     cover: string;
@@ -179,12 +179,12 @@ export type FooterLinks = {
   icon: IconType;
 }[];
 
-export type GetBlogPostsListFrontmatters = {
+export type GetArticleListFrontmatters = {
   id: number;
   title: string;
   slug: string;
   published: string;
-  updated: string;
+  updated: boolean;
   user: {
     id: number;
     username: string;
@@ -198,6 +198,23 @@ export type GetBlogPostsListFrontmatters = {
     id: number;
     url: string;
   };
+};
+
+export type GetArticleSource = {
+  markdown: string;
+  title: string;
+  published: string;
+  updated: boolean;
+  user: {
+    id: number;
+    username: string;
+    portrait: {
+      id: number;
+      url: string;
+    };
+  };
+  tags: string;
+  cover: { id: number; url: string };
 };
 
 export type SyntaxTree = {

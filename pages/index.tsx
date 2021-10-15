@@ -3,12 +3,12 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Card, Layout, PublishedDate, Tags } from '@/components/index';
-import { getBlogPostsList, getProjectsList } from '@/lib/api';
+import { getArticleList, getProjectsList } from '@/lib/api';
 import styles from '@/styles/index';
 import { ALlDataProps } from '@/lib/types';
 
-const Home: NextPage<ALlDataProps> = ({ blogPosts, projects }) => {
-  const slicedPosts = blogPosts.slice(0, 2);
+const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
+  const slicedPosts = articles.slice(0, 2);
   const slicedProjedcts = projects.slice(0, 2);
   const seo = {
     title: 'Home',
@@ -53,8 +53,8 @@ const Home: NextPage<ALlDataProps> = ({ blogPosts, projects }) => {
             </a>
             .
           </p>
-          <section id="recent-blog-posts" className="mt-10 mb-20">
-            <h2 className="mb-8 text-4xl font-bold">Recent blog posts</h2>
+          <section id="recent-articles" className="mt-10 mb-20">
+            <h2 className="mb-8 text-4xl font-bold">Recent Articles</h2>
             {slicedPosts.length > 0 ? (
               <div
                 className={`grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4`}
@@ -71,13 +71,13 @@ const Home: NextPage<ALlDataProps> = ({ blogPosts, projects }) => {
                         key={slug}
                         img={img}
                         title={title}
-                        href={`/blog/${slug}`}
+                        href={`/articles/${slug}`}
                       >
                         <PublishedDate
                           updated={updated}
                           published={published}
                         />
-                        <Tags tags={tagArray} page={'blog'} />
+                        <Tags tags={tagArray} page={'articles'} />
                       </Card>
                     );
                   }
@@ -87,7 +87,7 @@ const Home: NextPage<ALlDataProps> = ({ blogPosts, projects }) => {
               <h3 className="my-10 text-2xl">No Posts 😢</h3>
             )}
             {slicedPosts.length > 0 && (
-              <Link href="/blog">
+              <Link href="/articles">
                 <a className={clsx(styles.link.primary)}>
                   Read more articles
                   <span className="inline-block ml-1 no-underline">📰</span>
@@ -140,11 +140,11 @@ const Home: NextPage<ALlDataProps> = ({ blogPosts, projects }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const blogPosts = await getBlogPostsList();
+  const articles = await getArticleList();
   const projects = await getProjectsList();
 
   return {
-    props: { blogPosts, projects },
+    props: { articles, projects },
   };
 };
 

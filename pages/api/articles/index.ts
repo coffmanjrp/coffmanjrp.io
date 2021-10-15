@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getBlogPost } from '@/lib/api';
+import { getArticleList } from '@/lib/api';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { slug } = req.query;
+  const { term } = req.query;
 
-  const post = await getBlogPost(slug);
+  const posts = await getArticleList(term);
 
-  res.status(200).json({ post });
+  res.status(200).json({ posts });
 }

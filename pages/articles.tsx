@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useState, SetStateAction } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -15,15 +15,19 @@ import {
 } from '@/components/index';
 import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
-import { getBlogPostsList } from '@/lib/api';
-import { BlogPostsProps, FilterdBlogPosts, PagenationProps } from '@/lib/types';
+import { getArticleList } from '@/lib/api';
+import {
+  ArticlesProps,
+  FilterdArticlePosts,
+  PagenationProps,
+} from '@/lib/types';
 import usePagenation from '@/hooks/usePagenation';
 import styles from '@/styles/index';
 
 // @todo - use React memoization
-const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
+const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
   const [term, setTerm] = useState<string>('');
-  const [filterdPosts, setFilterdPosts] = useState<FilterdBlogPosts>([]);
+  const [filterdPosts, setFilterdPosts] = useState<FilterdArticlePosts>([]);
   const router = useRouter();
   const {
     count,
@@ -55,8 +59,8 @@ const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
     maxContentIndex,
   };
   const seo = {
-    title: 'Blog',
-    canonical: `${BASE_URL}/blog`,
+    title: 'Articles',
+    canonical: `${BASE_URL}/articles`,
   };
 
   useEffect(() => {
@@ -78,7 +82,7 @@ const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
       <Layout seo={seo}>
         <main className={clsx(styles.main)}>
           <div className="relative w-full mb-8">
-            <h1 className={clsx(styles.heading)}>Blog</h1>
+            <h1 className={clsx(styles.heading)}>Articles</h1>
             <p className={clsx(styles.paragraph, 'my-6')}>
               There are a total of {posts.length} articles that I have written
               for this site. You can use the search box below to narrow down
@@ -87,16 +91,16 @@ const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
             <SearchBox
               term={term}
               setTerm={setTerm}
-              placeholder="Search Article By Title"
+              placeholder="Search Articles By Title"
             />
             {router.query.term && (
               <div className="flex">
                 <span className="mr-2">Filtered By Tag:</span>
                 <Tag
                   tag={router.query.term}
-                  href={`/blog?term=${router.query.term}`}
+                  href={`/articles?term=${router.query.term}`}
                 />
-                <Link href="/blog">
+                <Link href="/articles">
                   <a className="p-1 text-base text-red-500 rounded-full cursor-pointer">
                     <FaRegTimesCircle />
                   </a>
@@ -120,13 +124,13 @@ const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
                         key={slug}
                         img={img}
                         title={title}
-                        href={`/blog/${slug}`}
+                        href={`/articles/${slug}`}
                       >
                         <PublishedDate
                           updated={updated}
                           published={published}
                         />
-                        <Tags tags={tagArray} page="blog" />
+                        <Tags tags={tagArray} page="articles" />
                       </Card>
                     );
                   }
@@ -145,11 +149,11 @@ const BlogPage: NextPage<BlogPostsProps> = ({ posts }) => {
 export const getServerSideProps: GetServerSideProps = async ({
   query: { term },
 }) => {
-  const posts = await getBlogPostsList(term);
+  const posts = await getArticleList(term);
 
   return {
     props: { posts },
   };
 };
 
-export default BlogPage;
+export default ArticlesPage;

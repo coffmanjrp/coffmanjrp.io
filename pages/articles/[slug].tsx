@@ -7,12 +7,12 @@ import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
-import { getAllBlogPostsSlug, getBlogPost } from '@/lib/api';
-import { BlogPostProps } from '@/lib/types';
+import { getAllArticleSlug, getArticle } from '@/lib/api';
+import { ArticleProps } from '@/lib/types';
 import { BASE_URL } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
 
-const BlogPostPage: NextPage<BlogPostProps> = ({
+const ArticlePage: NextPage<ArticleProps> = ({
   frontmatter,
   source,
   plaiceholders,
@@ -31,9 +31,9 @@ const BlogPostPage: NextPage<BlogPostProps> = ({
   const syntaxTree = useSyntaxTree(root, title);
   const seo = {
     title,
-    canonical: `${BASE_URL}/blog/${titleSlug}`,
+    canonical: `${BASE_URL}/articles/${titleSlug}`,
     openGraph: {
-      url: `${BASE_URL}/blog/${titleSlug}`,
+      url: `${BASE_URL}/articles/${titleSlug}`,
       title,
       images: [
         {
@@ -54,7 +54,7 @@ const BlogPostPage: NextPage<BlogPostProps> = ({
           {cover && <Image {...cover} alt={title} placeholder="blur" />}
           <div className="inline-flex gap-1 mt-8 mb-4">
             {tagArray?.map((tag, index) => (
-              <Tag key={index} tag={tag} href={`/blog?term=${tag}`} />
+              <Tag key={index} tag={tag} href={`/articles?term=${tag}`} />
             ))}
           </div>
           <div className="flex justify-between md:items-center flex-col md:flex-row mt-2 w-full mb-4">
@@ -73,19 +73,11 @@ const BlogPostPage: NextPage<BlogPostProps> = ({
                     Written By <span className="font-bold">{name}</span>
                   </p>
                   <p>
-                    Published on{' '}
+                    {updated ? 'Updated' : 'Published'} on{' '}
                     <span className="font-bold">
                       {format(parseISO(published), 'MMMM dd, yyyy')}
                     </span>
                   </p>
-                  {updated && (
-                    <p>
-                      Updated on{' '}
-                      <span className="font-bold">
-                        {format(parseISO(updated), 'MMMM dd, yyyy')}
-                      </span>
-                    </p>
-                  )}
                 </div>
               </div>
             </div>
@@ -103,8 +95,8 @@ const BlogPostPage: NextPage<BlogPostProps> = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { blogs } = await getAllBlogPostsSlug();
-  const paths = blogs.map(({ slug }: { slug: string }) => ({
+  const { articles } = await getAllArticleSlug();
+  const paths = articles.map(({ slug }: { slug: string }) => ({
     params: {
       slug,
     },
@@ -117,7 +109,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = await getBlogPost(params?.slug);
+  const post = await getArticle(params?.slug);
 
   return {
     props: {
@@ -126,4 +118,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export default BlogPostPage;
+export default ArticlePage;

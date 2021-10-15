@@ -20,7 +20,7 @@ import usePagenation from '@/hooks/usePagenation';
 import styles from '@/styles/index';
 
 // @todo - use React memoization
-const BlogPage: NextPage<ProjectsProps> = ({ projects }) => {
+const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
   const [term, setTerm] = useState<string>('');
   const [filterdPosts, setFilterdPosts] = useState<FilterdProjects>([]);
   const router = useRouter();
@@ -85,7 +85,7 @@ const BlogPage: NextPage<ProjectsProps> = ({ projects }) => {
             <SearchBox
               term={term}
               setTerm={setTerm}
-              placeholder="Search Project By Title"
+              placeholder="Search Projects By Title"
             />
             {router.query.term && (
               <div className="flex">
@@ -146,4 +146,4 @@ export const getServerSideProps: GetServerSideProps = async ({
   };
 };
 
-export default BlogPage;
+export default ArticlePage;

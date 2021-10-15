@@ -5,7 +5,7 @@ import Image from 'next/image';
 type Props = {
   children?: ReactNode;
   href?: string;
-  src?: string;
+  src: string;
   alt?: string;
 };
 
@@ -27,13 +27,7 @@ export const CustomLink: FC<Props> = (props) => {
 export const ResponsiveImage: FC<Props> = (props) => {
   return (
     <div className="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-900">
-      <Image
-        src={props.src}
-        alt={props.alt}
-        layout="fill"
-        objectFit="contain"
-        {...props}
-      />
+      <Image alt={props.alt} layout="fill" objectFit="contain" {...props} />
     </div>
   );
 };

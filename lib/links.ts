@@ -31,8 +31,8 @@ export const footerLinks: FooterLinks = [
 export const navLinks: NavLinks = [
   {
     id: 1,
-    title: 'Blog',
-    path: '/blog',
+    title: 'Articles',
+    path: '/articles',
   },
   {
     id: 2,

@@ -4,19 +4,18 @@ import Badge from './Badge';
 
 type Props = {
   published: string;
-  updated?: string;
+  updated: boolean;
 };
 
 const PublishedDate: FC<Props> = ({ published, updated }) => {
   return (
     <>
-      {updated ? (
+      {format(parseISO(published), 'MMMM dd, yyyy')}
+      {updated && (
         <>
-          {format(parseISO(updated), 'MMMM dd, yyyy')}{' '}
+          {' '}
           <Badge scheme="warning">❗ Updated</Badge>
         </>
-      ) : (
-        format(parseISO(published), 'MMMM dd, yyyy')
       )}
     </>
   );
