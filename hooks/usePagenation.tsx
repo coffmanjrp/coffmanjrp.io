@@ -40,17 +40,19 @@ const usePagenation = ({
   };
 
   return {
-    count,
-    contentPerPage,
-    totalPageCount,
-    nextPage: () => pageTransition(true),
-    prevPage: () => pageTransition(false),
-    minContentIndex,
-    maxContentIndex,
+    pagenationProps: {
+      count,
+      contentPerPage,
+      totalPageCount,
+      nextPage: () => pageTransition(true),
+      prevPage: () => pageTransition(false),
+      minContentIndex,
+      maxContentIndex,
+      currentPage,
+      setCurrentPage,
+    },
     firstContentIndex,
     lastContentIndex,
-    currentPage,
-    setCurrentPage,
   };
 };
 

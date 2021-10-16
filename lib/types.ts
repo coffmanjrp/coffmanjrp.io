@@ -115,7 +115,7 @@ export type ProjectsProps = {
   }[];
 };
 
-export type FilterdArticlePosts = {
+export type FilteredArticlePosts = {
   frontmatter: {
     slug: string;
     title: string;
@@ -136,7 +136,7 @@ export type FilterdArticlePosts = {
   };
 }[];
 
-export type FilterdProjects = {
+export type FilteredProjects = {
   frontmatter: {
     slug: string;
     title: string;
@@ -153,18 +153,6 @@ export type FilterdProjects = {
     };
   };
 }[];
-
-export type PagenationProps = {
-  count: number;
-  contentPerPage: number;
-  totalPageCount: number[];
-  prevPage: () => void;
-  nextPage: () => void;
-  currentPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
-  minContentIndex: number;
-  maxContentIndex: number;
-};
 
 export type NavLinks = {
   id: number;

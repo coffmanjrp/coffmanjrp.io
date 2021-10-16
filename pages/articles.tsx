@@ -1,4 +1,3 @@
-import { Dispatch, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -16,66 +15,26 @@ import {
 import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getArticleList } from '@/lib/api';
-import {
-  ArticlesProps,
-  FilterdArticlePosts,
-  PagenationProps,
-} from '@/lib/types';
+import { FilteredArticlePosts, ArticlesProps } from '@/lib/types';
+import useFilterList from '@/hooks/useFilterList';
 import usePagenation from '@/hooks/usePagenation';
 import styles from '@/styles/index';
 
-// @todo - use React memoization
 const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
-  const [term, setTerm] = useState<string>('');
-  const [filterdPosts, setFilterdPosts] = useState<FilterdArticlePosts>([]);
-  const router = useRouter();
-  const {
-    count,
-    contentPerPage,
-    totalPageCount,
-    prevPage,
-    nextPage,
-    currentPage,
-    setCurrentPage,
-    firstContentIndex,
-    lastContentIndex,
-    minContentIndex,
-    maxContentIndex,
-  } = usePagenation({
-    contentPerPage: 10,
-    count: filterdPosts.length + 1,
-    min: 0,
-    max: 5,
-  });
-  const pagenationProps: PagenationProps = {
-    count,
-    contentPerPage,
-    totalPageCount,
-    prevPage,
-    nextPage,
-    currentPage,
-    setCurrentPage,
-    minContentIndex,
-    maxContentIndex,
-  };
   const seo = {
     title: 'Articles',
     canonical: `${BASE_URL}/articles`,
   };
 
-  useEffect(() => {
-    filterPosts();
-
-    // eslint-disable-next-line
-  }, [term, router]);
-
-  const filterPosts = () => {
-    const results = posts.filter((post) =>
-      post.frontmatter.title.toLowerCase().includes(term.toLowerCase())
-    );
-
-    setFilterdPosts(results);
-  };
+  const router = useRouter();
+  const { term, setTerm, filteredList } = useFilterList(posts, router);
+  const { pagenationProps, firstContentIndex, lastContentIndex } =
+    usePagenation({
+      contentPerPage: 10,
+      count: filteredList.length + 1,
+      min: 0,
+      max: 5,
+    });
 
   return (
     <>
@@ -108,9 +67,9 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
               </div>
             )}
           </div>
-          {filterdPosts.length > 0 ? (
+          {filteredList.length > 0 ? (
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
-              {filterdPosts
+              {(filteredList as FilteredArticlePosts)
                 .slice(firstContentIndex, lastContentIndex)
                 .map(
                   ({
