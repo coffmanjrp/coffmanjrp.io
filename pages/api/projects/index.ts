@@ -5,7 +5,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { projects } = await getProjectsList();
+  const { term } = req.query;
+
+  const projects = await getProjectsList(term);
 
   res.status(200).json({ projects });
 }

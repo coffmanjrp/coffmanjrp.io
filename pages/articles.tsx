@@ -31,7 +31,7 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
   const { pagenationProps, firstContentIndex, lastContentIndex } =
     usePagenation({
       contentPerPage: 10,
-      count: filteredList.length + 1,
+      count: filteredList.length,
       min: 0,
       max: 5,
     });

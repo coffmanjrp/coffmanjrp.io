@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const { term } = req.query;
 
-  const posts = await getArticleList(term);
+  const articles = await getArticleList(term);
 
-  res.status(200).json({ posts });
+  res.status(200).json({ articles });
 }

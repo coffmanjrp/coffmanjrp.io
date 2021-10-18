@@ -41,7 +41,7 @@ const usePagenation = ({
 
   return {
     pagenationProps: {
-      count,
+      count: count + 1,
       contentPerPage,
       totalPageCount,
       nextPage: () => pageTransition(true),

@@ -206,6 +206,7 @@ type GetProjectsListFrontmatters = {
   slug: string;
   links: string;
   tags: string;
+  show: boolean;
   cover: { id: number; url: string };
 };
 
@@ -218,6 +219,7 @@ export const getProjectsList = async (term?: string | string[]) => {
         slug
         tags
         links
+        show
         cover {
           id
           url
@@ -237,6 +239,7 @@ export const getProjectsList = async (term?: string | string[]) => {
           slug: data.slug,
           tags: data.tags,
           links: data.links,
+          show: data.show,
           cover: {
             id: data.cover ? data.cover.id : null,
             url: data.cover ? data.cover.url : null,

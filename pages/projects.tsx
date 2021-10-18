@@ -3,7 +3,8 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
-import { FaRegTimesCircle, FaGithub } from 'react-icons/fa';
+import { FaGithub, FaRegTimesCircle } from 'react-icons/fa';
+import { MdFindInPage } from 'react-icons/md';
 import {
   Card,
   Layout,
@@ -30,7 +31,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
   const { pagenationProps, firstContentIndex, lastContentIndex } =
     usePagenation({
       contentPerPage: 10,
-      count: filteredList.length + 1,
+      count: filteredList.length,
       min: 0,
       max: 5,
     });
@@ -71,31 +72,42 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                 .slice(firstContentIndex, lastContentIndex)
                 .map(
                   ({
-                    frontmatter: { slug, title, tags, links },
+                    frontmatter: { slug, title, tags, links, show },
                     plaiceholder: { img },
                   }) => {
                     const tagArray = tags?.trim().split(',');
 
                     return (
-                      <Card
-                        key={slug}
-                        img={img}
-                        title={title}
-                        href={links.website}
-                      >
-                        <div>
-                          <a
-                            href={links.github}
-                            target="_blank"
-                            rel="noreferrer nooperner"
-                            aria-label="Link to Github"
-                            className={clsx(styles.link.icon, 'text-xl')}
-                          >
-                            <FaGithub />
-                          </a>
-                        </div>
-                        <Tags tags={tagArray} page="projects" />
-                      </Card>
+                      show && (
+                        <Card
+                          key={slug}
+                          img={img}
+                          title={title}
+                          href={links.website}
+                        >
+                          <div className="flex gap-2">
+                            <a
+                              href={links.website}
+                              target="_blank"
+                              rel="noreferrer nooperner"
+                              aria-label="View Website"
+                              className={clsx(styles.link.icon, 'text-xl')}
+                            >
+                              <MdFindInPage />
+                            </a>
+                            <a
+                              href={links.github}
+                              target="_blank"
+                              rel="noreferrer nooperner"
+                              aria-label="View Github"
+                              className={clsx(styles.link.icon, 'text-xl')}
+                            >
+                              <FaGithub />
+                            </a>
+                          </div>
+                          <Tags tags={tagArray} page="projects" />
+                        </Card>
+                      )
                     );
                   }
                 )}
