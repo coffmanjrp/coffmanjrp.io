@@ -29,7 +29,7 @@ const NavButtons: FC = () => {
     <>
       <button
         type="button"
-        className={clsx(styles.link.icon, 'p-2')}
+        className={clsx(styles.link.icon, 'p-2', 'text-2xl')}
         aria-label="Toggle theme mode"
         onClick={handleTheme}
       >
@@ -37,7 +37,7 @@ const NavButtons: FC = () => {
       </button>
       <a
         href="https://github.com/coffmanjrp"
-        className={clsx(styles.link.icon, 'p-2')}
+        className={clsx(styles.link.icon, 'p-2', 'text-2xl')}
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Visit to coffmanjrp's Github profile"
@@ -46,7 +46,7 @@ const NavButtons: FC = () => {
       </a>
       <button
         type="button"
-        className={clsx(styles.link.icon, 'p-2', 'md:hidden')}
+        className={clsx(styles.link.icon, 'p-2', 'text-2xl', 'md:hidden')}
         aria-label="Toggle menu"
         onClick={handleToggleMenu}
       >

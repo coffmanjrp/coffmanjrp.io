@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import clsx from 'clsx';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import {
   Card,
@@ -12,7 +13,6 @@ import {
   Tags,
   SearchBox,
 } from '@/components/index';
-import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getArticleList } from '@/lib/api';
 import { FilteredArticlePosts, ArticlesProps } from '@/lib/types';

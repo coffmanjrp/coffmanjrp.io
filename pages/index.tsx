@@ -8,11 +8,12 @@ import styles from '@/styles/index';
 import { ALlDataProps } from '@/lib/types';
 
 const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
-  const slicedPosts = articles.slice(0, 2);
-  const slicedProjedcts = projects.slice(0, 2);
   const seo = {
     title: 'Home',
   };
+
+  const slicedPosts = articles.slice(0, 2);
+  const slicedProjedcts = projects.slice(0, 2);
 
   return (
     <>

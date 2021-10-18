@@ -28,7 +28,7 @@ h6 {
 }
 
 .icon-link {
-  @apply block text-2xl text-gray-600 dark:text-gray-100;
+  @apply inline-block text-gray-600 dark:text-gray-100;
 }
 
 .markdown .anchor-tag {

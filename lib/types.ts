@@ -142,6 +142,10 @@ export type FilteredProjects = {
     title: string;
     tags?: string;
     cover: string;
+    links: {
+      github: string;
+      website: string;
+    };
   };
   plaiceholder: {
     img: {

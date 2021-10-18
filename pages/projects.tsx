@@ -2,7 +2,8 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FaRegTimesCircle } from 'react-icons/fa';
+import clsx from 'clsx';
+import { FaRegTimesCircle, FaGithub } from 'react-icons/fa';
 import {
   Card,
   Layout,
@@ -11,7 +12,6 @@ import {
   Tags,
   SearchBox,
 } from '@/components/index';
-import clsx from 'clsx';
 import { BASE_URL } from '@/config/index';
 import { getProjectsList } from '@/lib/api';
 import { FilteredProjects, ProjectsProps } from '@/lib/types';
@@ -71,7 +71,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                 .slice(firstContentIndex, lastContentIndex)
                 .map(
                   ({
-                    frontmatter: { slug, title, tags },
+                    frontmatter: { slug, title, tags, links },
                     plaiceholder: { img },
                   }) => {
                     const tagArray = tags?.trim().split(',');
@@ -81,8 +81,19 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                         key={slug}
                         img={img}
                         title={title}
-                        href={'/projects'}
+                        href={links.website}
                       >
+                        <div>
+                          <a
+                            href={links.github}
+                            target="_blank"
+                            rel="noreferrer nooperner"
+                            aria-label="Link to Github"
+                            className={clsx(styles.link.icon, 'text-xl')}
+                          >
+                            <FaGithub />
+                          </a>
+                        </div>
                         <Tags tags={tagArray} page="projects" />
                       </Card>
                     );

@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import { CustomLink } from '@/components/index';
 
 type Props = {
   href: string;
@@ -16,11 +16,11 @@ type Props = {
 
 const CardImage: FC<Props> = ({ href, img, title }) => {
   return (
-    <Link href={href}>
-      <a className="flex-1">
+    <div className="flex-1">
+      <CustomLink href={href}>
         <Image {...img} alt={title} placeholder="blur" />
-      </a>
-    </Link>
+      </CustomLink>
+    </div>
   );
 };
 

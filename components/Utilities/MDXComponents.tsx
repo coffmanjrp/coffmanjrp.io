@@ -1,4 +1,5 @@
-import { CustomLink, ResponsiveImage } from './CustomMDX';
+import CustomLink from './CustomLink';
+import ResponsiveImage from './ResponsiveImage';
 
 const MDXComponents = {
   a: CustomLink,
