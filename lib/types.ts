@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { IconType } from 'react-icons';
 
 export type ALlDataProps = {
@@ -142,6 +141,7 @@ export type FilteredProjects = {
     title: string;
     tags?: string;
     cover: string;
+    show: boolean;
     links: {
       github: string;
       website: string;

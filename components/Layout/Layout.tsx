@@ -6,7 +6,7 @@ import {
   Footer,
   MobileMenu,
   Nav,
-  SiteNav,
+  SideNav,
 } from '@/components/index';
 
 type Props = {
@@ -30,7 +30,7 @@ const Layout: FC<Props> = ({ children, toc, seo }) => {
       <NextSeo {...seo} />
       <Nav />
       <Container>
-        <SiteNav />
+        <SideNav />
         {children}
         <FloatingTOC toc={toc} />
       </Container>
