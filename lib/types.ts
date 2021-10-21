@@ -27,6 +27,7 @@ export type ALlDataProps = {
       title: string;
       tags?: string;
       cover: string;
+      show: boolean;
     };
     plaiceholder: {
       img: {

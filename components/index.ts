@@ -8,7 +8,7 @@ export { default as IconContainer } from './Utilities/IconContainer';
 export { default as Layout } from './Layout/Layout';
 export { default as MDXComponents } from './Utilities/MDXComponents';
 export { default as MobileMenu } from './MobileMenu/MobileMenu';
-export { default as Nav } from './Nav/Nav';
+export { default as Header } from './Header/Header';
 export { default as Pagenation } from './Pagenation/Pagenation';
 export { default as PublishedDate } from './Utilities/PublishedDate';
 export { default as ResponsiveImage } from './Utilities/ResponsiveImage';

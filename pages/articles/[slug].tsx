@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import type { NextPage } from 'next';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { MDXRemote } from 'next-mdx-remote';
 import { parseISO, format } from 'date-fns';
 // @ts-ignore
@@ -17,6 +18,9 @@ const ArticlePage: NextPage<ArticleProps> = ({
   source,
   plaiceholders,
 }) => {
+  const router = useRouter();
+  const upperRoute = router.asPath.split('/')[1];
+
   const root = useRef<HTMLDivElement>(null);
   const {
     title,
@@ -29,6 +33,7 @@ const ArticlePage: NextPage<ArticleProps> = ({
   const tagArray = tags?.trim().split(',');
   const titleSlug = slug(title);
   const syntaxTree = useSyntaxTree(root, title);
+
   const seo = {
     title,
     canonical: `${BASE_URL}/articles/${titleSlug}`,
@@ -45,7 +50,7 @@ const ArticlePage: NextPage<ArticleProps> = ({
   };
 
   return (
-    <Layout seo={seo} toc={syntaxTree}>
+    <Layout seo={seo} toc={syntaxTree} sideNav={upperRoute}>
       <article className="w-full max-w-screen-md mx-auto">
         <div className="flex flex-col w-full">
           <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">

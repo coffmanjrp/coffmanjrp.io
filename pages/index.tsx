@@ -104,20 +104,22 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
               >
                 {slicedProjedcts.map(
                   ({
-                    frontmatter: { slug, title, tags },
+                    frontmatter: { slug, title, tags, show },
                     plaiceholder: { img },
                   }) => {
                     const tagArray = tags?.trim().split(',');
 
                     return (
-                      <Card
-                        key={slug}
-                        img={img}
-                        title={title}
-                        href={'/projects'}
-                      >
-                        <Tags tags={tagArray} page="projects" />
-                      </Card>
+                      show && (
+                        <Card
+                          key={slug}
+                          img={img}
+                          title={title}
+                          href={'/projects'}
+                        >
+                          <Tags tags={tagArray} page="projects" />
+                        </Card>
+                      )
                     );
                   }
                 )}
@@ -129,7 +131,7 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
               <Link href="/projects">
                 <a className={clsx(styles.link.primary)}>
                   View more projects
-                  <span className="inline-block ml-1 no-underline">✒</span>
+                  <span className="inline-block ml-1 no-underline">🧪</span>
                 </a>
               </Link>
             )}

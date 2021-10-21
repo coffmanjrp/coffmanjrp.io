@@ -5,7 +5,7 @@ import {
   FloatingTOC,
   Footer,
   MobileMenu,
-  Nav,
+  Header,
   SideNav,
 } from '@/components/index';
 
@@ -22,15 +22,16 @@ type Props = {
       description?: string;
     };
   };
+  sideNav: string;
 };
 
-const Layout: FC<Props> = ({ children, toc, seo }) => {
+const Layout: FC<Props> = ({ children, toc, seo, sideNav }) => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen px-6 py-0 bg-gray-100 dark:bg-gray-900">
       <NextSeo {...seo} />
-      <Nav />
+      <Header />
       <Container>
-        <SideNav />
+        <SideNav sideNav={sideNav} />
         {children}
         <FloatingTOC toc={toc} />
       </Container>
