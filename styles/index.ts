@@ -18,7 +18,6 @@ const styles = {
     'dark:bg-gray-900',
     'z-20',
   ],
-  icon: { container: ['block', 'm-auto'] },
   nav: {
     title: [
       'text-lg',

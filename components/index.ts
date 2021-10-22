@@ -4,7 +4,6 @@ export { default as CustomLink } from './Utilities/CustomLink';
 export { default as Container } from './Layout/Container';
 export { default as FloatingTOC } from './SideNav/FloatingTOC';
 export { default as Footer } from './Footer/Footer';
-export { default as IconContainer } from './Utilities/IconContainer';
 export { default as Layout } from './Layout/Layout';
 export { default as MDXComponents } from './Utilities/MDXComponents';
 export { default as MobileMenu } from './MobileMenu/MobileMenu';
