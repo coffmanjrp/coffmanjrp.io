@@ -12,6 +12,7 @@ import { ALlDataProps } from '@/lib/types';
 const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
   const seo = {
     title: 'Home',
+    keywords: 'Frontend Developer, Backend Developer, Web Developer',
   };
 
   const slicedPosts = articles.slice(0, 2);

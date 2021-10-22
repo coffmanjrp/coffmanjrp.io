@@ -13,7 +13,7 @@ import {
   Tags,
   SearchBox,
 } from '@/components/index';
-import { BASE_URL } from '@/config/index';
+import { baseUrl } from '@/config/index';
 import { getProjectsList } from '@/lib/api';
 import { FilteredProjects, ProjectsProps } from '@/lib/types';
 import useFilterList from '@/hooks/useFilterList';
@@ -23,7 +23,7 @@ import styles from '@/styles/index';
 const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
   const seo = {
     title: 'Projects',
-    canonical: `${BASE_URL}/projects`,
+    canonical: `${baseUrl}/projects`,
   };
 
   const router = useRouter();

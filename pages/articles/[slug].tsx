@@ -10,7 +10,7 @@ import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
 import { getAllArticleSlug, getArticle } from '@/lib/api';
 import { ArticleProps } from '@/lib/types';
-import { BASE_URL } from '@/config/index';
+import { baseUrl } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
 
 const ArticlePage: NextPage<ArticleProps> = ({
@@ -36,10 +36,14 @@ const ArticlePage: NextPage<ArticleProps> = ({
 
   const seo = {
     title,
-    canonical: `${BASE_URL}/articles/${titleSlug}`,
+    keywords: tags,
+    description: title,
+    canonical: `${baseUrl}/articles/${titleSlug}`,
     openGraph: {
-      url: `${BASE_URL}/articles/${titleSlug}`,
+      url: `${baseUrl}/articles/${titleSlug}`,
       title,
+      description: title,
+      keywords: tags,
       images: [
         {
           url: cover.src,
