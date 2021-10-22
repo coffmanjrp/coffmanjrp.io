@@ -43,9 +43,9 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
           <div className="relative w-full mb-8">
             <h1 className={clsx(styles.heading)}>Articles</h1>
             <p className={clsx(styles.paragraph, 'my-6')}>
-              There are a total of {posts.length} articles that I have written
-              for this site. You can use the search box below to narrow down
-              your search for article titles.
+              There are a total of {posts.length} article posts that I have
+              written for this site. You can use the search box below to narrow
+              down your search for article titles.
             </p>
             <SearchBox
               term={term}
@@ -96,7 +96,9 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
                 )}
             </div>
           ) : (
-            <h3 className="my-10 text-2xl">No Posts 😢</h3>
+            <h3 className="my-10 text-2xl">
+              Sorry, no articles have been posted 😢
+            </h3>
           )}
           <Pagenation {...pagenationProps} />
         </main>

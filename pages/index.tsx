@@ -85,7 +85,9 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
                 )}
               </div>
             ) : (
-              <h3 className="my-10 text-2xl">No Posts 😢</h3>
+              <h3 className="my-10 text-2xl">
+                Sorry, no articles have been posted 😢
+              </h3>
             )}
             {slicedPosts.length > 0 && (
               <Link href="/articles">
@@ -125,7 +127,9 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
                 )}
               </div>
             ) : (
-              <h3 className="my-10 text-2xl">No Projects 😢</h3>
+              <h3 className="my-10 text-2xl">
+                Sorry, don&#39;t have any projects 😢
+              </h3>
             )}
             {slicedProjedcts.length > 0 && (
               <Link href="/projects">

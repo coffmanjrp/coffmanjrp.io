@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FaChevronLeft } from 'react-icons/fa';
 
 type Props = {
-  sideNav: string;
+  sideNav?: string;
 };
 
 const SideNav: FC<Props> = ({ sideNav }) => {

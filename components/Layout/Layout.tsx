@@ -22,7 +22,7 @@ type Props = {
       description?: string;
     };
   };
-  sideNav: string;
+  sideNav?: string;
 };
 
 const Layout: FC<Props> = ({ children, toc, seo, sideNav }) => {

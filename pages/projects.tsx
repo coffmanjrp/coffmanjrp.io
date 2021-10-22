@@ -113,7 +113,9 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                 )}
             </div>
           ) : (
-            <h3 className="my-10 text-2xl">No Projects 😢</h3>
+            <h3 className="my-10 text-2xl">
+              Sorry, don&#39;t have any projects 😢
+            </h3>
           )}
           <Pagenation {...pagenationProps} />
         </main>
