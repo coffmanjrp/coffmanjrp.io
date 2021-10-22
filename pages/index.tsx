@@ -2,6 +2,8 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { FaGithub } from 'react-icons/fa';
+import { MdFindInPage } from 'react-icons/md';
 import { Card, Layout, PublishedDate, Tags } from '@/components/index';
 import { getArticleList, getProjectsList } from '@/lib/api';
 import styles from '@/styles/index';
@@ -106,7 +108,7 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
               >
                 {slicedProjedcts.map(
                   ({
-                    frontmatter: { slug, title, tags, show },
+                    frontmatter: { slug, title, tags, links, show },
                     plaiceholder: { img },
                   }) => {
                     const tagArray = tags?.trim().split(',');
@@ -117,8 +119,28 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
                           key={slug}
                           img={img}
                           title={title}
-                          href={'/projects'}
+                          href={links.website}
                         >
+                          <div className="flex gap-2">
+                            <a
+                              href={links.website}
+                              target="_blank"
+                              rel="noreferrer nooperner"
+                              aria-label="View Website"
+                              className={clsx(styles.link.icon, 'text-xl')}
+                            >
+                              <MdFindInPage />
+                            </a>
+                            <a
+                              href={links.github}
+                              target="_blank"
+                              rel="noreferrer nooperner"
+                              aria-label="View Github"
+                              className={clsx(styles.link.icon, 'text-xl')}
+                            >
+                              <FaGithub />
+                            </a>
+                          </div>
                           <Tags tags={tagArray} page="projects" />
                         </Card>
                       )
