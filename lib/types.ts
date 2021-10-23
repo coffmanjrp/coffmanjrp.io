@@ -28,6 +28,10 @@ export type ALlDataProps = {
       tags?: string;
       cover: string;
       show: boolean;
+      links: {
+        github: string;
+        website: string;
+      };
     };
     plaiceholder: {
       img: {
