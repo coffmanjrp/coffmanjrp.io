@@ -9,11 +9,10 @@ type Props = {
 const SideNav: FC<Props> = ({ sideNav }) => {
   const btnText =
     sideNav &&
-    `Back to 
+    `Go To 
 ${
   sideNav.charAt(0).slice(0, 1).toUpperCase() + sideNav.slice(1, sideNav.length)
-}
-Page`;
+}`;
 
   return (
     <div className="hidden md:block w-[24vw]">
