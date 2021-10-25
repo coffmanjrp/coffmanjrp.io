@@ -44,8 +44,8 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
             <h1 className={clsx(styles.heading)}>Articles</h1>
             <p className={clsx(styles.paragraph, 'my-6')}>
               There are a total of {posts.length} article posts that I have
-              written for this site. You can use the search box below to narrow
-              down your search for article titles.
+              written for this site.You can use the search box below to narrow
+              it down by article titles.
             </p>
             <SearchBox
               term={term}

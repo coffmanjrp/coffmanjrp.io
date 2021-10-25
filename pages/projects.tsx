@@ -43,8 +43,19 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
           <div className="relative w-full mb-8">
             <h1 className={clsx(styles.heading)}>Projects</h1>
             <p className={clsx(styles.paragraph, 'my-6')}>
-              You can use the search box below to narrow down your search for
-              project titles.
+              Here is a total of {projects.length} projects I have worked on. If
+              you enjoy or want to use any of these projects, please check them
+              on{' '}
+              <a
+                href="https://github.com/coffmanjrp"
+                target="_blank"
+                rel="noreferrer noopener"
+                className={clsx(styles.link.primary)}
+              >
+                GitHub
+              </a>
+              ! You can use the search box below to narrow it down by project
+              titles.
             </p>
             <SearchBox
               term={term}
