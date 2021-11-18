@@ -58,7 +58,9 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
             .
           </p>
           <section id="recent-articles" className="mt-10 mb-20">
-            <h2 className="mb-8 text-4xl font-bold">Recent Articles</h2>
+            <h2 className="mb-8 text-4xl font-bold dark:text-gray-100">
+              Recent Articles
+            </h2>
             {slicedPosts.length > 0 ? (
               <div
                 className={`grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4`}
@@ -102,7 +104,9 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
             )}
           </section>
           <section id="recent-projects" className="mb-10">
-            <h2 className="mb-8 text-4xl font-bold">Recent Projects</h2>
+            <h2 className="mb-8 text-4xl font-bold dark:text-gray-100">
+              Recent Projects
+            </h2>
             {slicedProjedcts.length > 0 ? (
               <div
                 className={`grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4`}

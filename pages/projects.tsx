@@ -45,7 +45,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
             <p className={clsx(styles.paragraph, 'my-6')}>
               Here is a total of {projects.length} projects I have worked on. If
               you enjoy or want to use any of these projects, please check them
-              on{' '}
+              on my{' '}
               <a
                 href="https://github.com/coffmanjrp"
                 target="_blank"

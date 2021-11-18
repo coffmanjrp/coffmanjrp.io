@@ -57,7 +57,10 @@ const ArticlePage: NextPage<ArticleProps> = ({
     <Layout seo={seo} toc={syntaxTree} sideNav={upperRoute}>
       <article className="w-full max-w-screen-md mx-auto">
         <div className="flex flex-col w-full">
-          <h1 id={titleSlug} className="text-5xl font-bold mb-8 text-center">
+          <h1
+            id={titleSlug}
+            className="text-5xl font-bold mb-8 text-center dark:text-gray-100"
+          >
             {title}
           </h1>
           {cover && <Image {...cover} alt={title} placeholder="blur" />}
@@ -77,7 +80,7 @@ const ArticlePage: NextPage<ArticleProps> = ({
                   height={60}
                   placeholder="blur"
                 />
-                <div className="text-sm">
+                <div className="text-sm dark:text-gray-100">
                   <p>
                     Written By <span className="font-bold">{name}</span>
                   </p>
