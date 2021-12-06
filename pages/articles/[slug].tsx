@@ -60,7 +60,7 @@ const ArticlePage: NextPage<ArticleProps> = ({
           {cover && <Image {...cover} alt={title} placeholder="blur" />}
           <h1
             id={titleSlug}
-            className="text-3xl md:text-5xl font-bold mt-4 mb-2 text-center dark:text-gray-100"
+            className="text-3xl md:text-5xl font-bold mt-4 mb-2 dark:text-gray-100"
           >
             {title}
           </h1>

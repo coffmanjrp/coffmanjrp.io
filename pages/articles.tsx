@@ -37,10 +37,10 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
   return (
     <>
       <Layout seo={seo}>
-        <main className="main">
-          <div className="relative w-full mb-8">
+        <main className="main space-y-8">
+          <div className="relative w-full space-y-6">
             <h1 className="heading">Articles</h1>
-            <p className="paragraph my-6">
+            <p className="paragraph">
               There are a total of {posts.length} article posts that I have
               written for this site.You can use the search box below to narrow
               it down by article titles.
@@ -66,7 +66,7 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
             )}
           </div>
           {filteredList.length > 0 ? (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 w-full">
               {(filteredList as FilteredArticlePosts)
                 .slice(firstContentIndex, lastContentIndex)
                 .map(

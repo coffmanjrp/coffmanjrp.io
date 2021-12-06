@@ -20,39 +20,41 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
     <>
       <Layout seo={seo}>
         <main className="main">
-          <h1 className="heading">Hi! I’m Paul Coffman Jr.</h1>
-          <p className="lead my-5 text-3xl">Frontend, Backend, Web developer</p>
-          <p className="paragraph">
-            Hello, I’m Paul Coffman Jr. I’m Frontend, Backend, Web developer.
-            Fluent in English/Japanese. You can contact me on{' '}
-            <a
-              href="https://www.linkedin.com/in/paul-coffman-jr/"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="link-primary"
-            >
-              LinkedIn
-            </a>
-            ,{' '}
-            <a
-              href="https://twitter.com/coffmanjrp"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="link-primary"
-            >
-              Twitter
-            </a>
-            , or{' '}
-            <a
-              href="mailto:coffmanjrp@gmail.com?subject=%E3%80%90Mail%20to%20coffmanjrp.io%E3%80%91"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="link-primary"
-            >
-              Email
-            </a>
-            .
-          </p>
+          <div className="space-y-5">
+            <h1 className="heading">Hi! I’m Paul Coffman Jr.</h1>
+            <p className="lead text-3xl">Frontend, Backend, Web developer</p>
+            <p className="paragraph">
+              Hello, I’m Paul Coffman Jr. I’m Frontend, Backend, Web developer.
+              Fluent in English/Japanese. You can contact me on{' '}
+              <a
+                href="https://www.linkedin.com/in/paul-coffman-jr/"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="link-primary"
+              >
+                LinkedIn
+              </a>
+              ,{' '}
+              <a
+                href="https://twitter.com/coffmanjrp"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="link-primary"
+              >
+                Twitter
+              </a>
+              , or{' '}
+              <a
+                href="mailto:coffmanjrp@gmail.com?subject=%E3%80%90Mail%20to%20coffmanjrp.io%E3%80%91"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="link-primary"
+              >
+                Email
+              </a>
+              .
+            </p>
+          </div>
           <section id="recent-articles" className="mt-10 mb-20">
             <h2 className="mb-8 text-4xl font-bold dark:text-gray-100">
               Recent Articles

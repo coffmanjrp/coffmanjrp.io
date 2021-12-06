@@ -37,10 +37,10 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
   return (
     <>
       <Layout seo={seo}>
-        <main className="main">
-          <div className="relative w-full mb-8">
+        <main className="main space-y-8">
+          <div className="relative w-full space-y-6">
             <h1 className="heading">Projects</h1>
-            <p className="paragraph my-6">
+            <p className="paragraph">
               Here is a total of {projects.length} projects I have worked on. If
               you enjoy or want to use any of these projects, please check them
               on my{' '}
@@ -76,7 +76,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
             )}
           </div>
           {filteredList.length > 0 ? (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full mt-4">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 w-full">
               {(filteredList as FilteredProjects)
                 .slice(firstContentIndex, lastContentIndex)
                 .map(
