@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import type { NextPage } from 'next';
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { MDXRemote } from 'next-mdx-remote';
@@ -8,7 +8,7 @@ import { parseISO, format } from 'date-fns';
 // @ts-ignore
 import { slug } from 'github-slugger';
 import { Layout, MDXComponents, Tag } from '@/components/index';
-import { getAllArticleSlug, getArticle } from '@/lib/api';
+import { getArticle } from '@/lib/api';
 import { ArticleProps } from '@/lib/types';
 import { baseUrl } from '@/config/index';
 import useSyntaxTree from '@/hooks/useSyntaxTree';
@@ -57,13 +57,13 @@ const ArticlePage: NextPage<ArticleProps> = ({
     <Layout seo={seo} toc={syntaxTree} sideNav={upperRoute}>
       <article className="w-full max-w-screen-md mx-auto">
         <div className="flex flex-col w-full">
+          {cover && <Image {...cover} alt={title} placeholder="blur" />}
           <h1
             id={titleSlug}
-            className="text-5xl font-bold mb-8 text-center dark:text-gray-100"
+            className="text-3xl md:text-5xl font-bold mt-4 mb-2 text-center dark:text-gray-100"
           >
             {title}
           </h1>
-          {cover && <Image {...cover} alt={title} placeholder="blur" />}
           <div className="inline-flex gap-1 mt-8 mb-4">
             {tagArray?.map((tag, index) => (
               <Tag key={index} tag={tag} href={`/articles?term=${tag}`} />
@@ -106,21 +106,7 @@ const ArticlePage: NextPage<ArticleProps> = ({
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const { articles } = await getAllArticleSlug();
-  const paths = articles.map(({ slug }: { slug: string }) => ({
-    params: {
-      slug,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await getArticle(params?.slug);
 
   return {
