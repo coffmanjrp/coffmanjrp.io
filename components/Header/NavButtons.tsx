@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useTheme } from 'next-themes';
-import clsx from 'clsx';
 import { FaGithub, FaBars, FaTimes } from 'react-icons/fa';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
@@ -9,7 +8,6 @@ import {
   selectShowMenu,
 } from '@/features/MobleMenu/mobileMenuSlice';
 import useHasMounted from '@/hooks/useHasMounted';
-import styles from '@/styles/index';
 
 const NavButtons: FC = () => {
   const showMenu = useAppSelector(selectShowMenu);
@@ -29,7 +27,7 @@ const NavButtons: FC = () => {
     <>
       <button
         type="button"
-        className={clsx(styles.link.icon, 'p-2', 'text-2xl')}
+        className="link-icon p-2 text-2xl"
         aria-label="Toggle theme mode"
         onClick={handleTheme}
       >
@@ -37,7 +35,7 @@ const NavButtons: FC = () => {
       </button>
       <a
         href="https://github.com/coffmanjrp"
-        className={clsx(styles.link.icon, 'p-2', 'text-2xl')}
+        className="link-icon p-2 text-2xl"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Visit to coffmanjrp's Github profile"
@@ -46,7 +44,7 @@ const NavButtons: FC = () => {
       </a>
       <button
         type="button"
-        className={clsx(styles.link.icon, 'p-2', 'text-2xl', 'md:hidden')}
+        className="link-icon p-2 text-2xl md:hidden"
         aria-label="Toggle menu"
         onClick={handleToggleMenu}
       >

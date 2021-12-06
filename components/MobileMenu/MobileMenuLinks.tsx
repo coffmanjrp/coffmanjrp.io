@@ -1,10 +1,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import clsx from 'clsx';
 import { navLinks } from '@/lib/links';
 import { useAppDispatch } from '@/app/hooks';
 import { toggleMenu } from '@/features/MobleMenu/mobileMenuSlice';
-import styles from '@/styles/index';
 
 const MobileMenuLinks: FC = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +15,7 @@ const MobileMenuLinks: FC = () => {
         navLinks.map(({ id, path, title }) => (
           <li key={id}>
             <Link href={path}>
-              <a className={clsx(styles.link.secondary)} onClick={handleClick}>
+              <a className="link-secondary" onClick={handleClick}>
                 {title}
               </a>
             </Link>
@@ -25,7 +23,7 @@ const MobileMenuLinks: FC = () => {
         ))}
       <li>
         <Link href="/">
-          <a className={clsx(styles.link.secondary)} onClick={handleClick}>
+          <a className="link-secondary" onClick={handleClick}>
             Home
           </a>
         </Link>

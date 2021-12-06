@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import clsx from 'clsx';
 import { FaGithub, FaRegTimesCircle } from 'react-icons/fa';
 import { MdFindInPage } from 'react-icons/md';
 import {
@@ -18,7 +17,6 @@ import { getProjectsList } from '@/lib/api';
 import { FilteredProjects, ProjectsProps } from '@/lib/types';
 import useFilterList from '@/hooks/useFilterList';
 import usePagenation from '@/hooks/usePagenation';
-import styles from '@/styles/index';
 
 const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
   const seo = {
@@ -39,10 +37,10 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
   return (
     <>
       <Layout seo={seo}>
-        <main className={clsx(styles.main)}>
+        <main className="main">
           <div className="relative w-full mb-8">
-            <h1 className={clsx(styles.heading)}>Projects</h1>
-            <p className={clsx(styles.paragraph, 'my-6')}>
+            <h1 className="heading">Projects</h1>
+            <p className="paragraph my-6">
               Here is a total of {projects.length} projects I have worked on. If
               you enjoy or want to use any of these projects, please check them
               on my{' '}
@@ -50,7 +48,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                 href="https://github.com/coffmanjrp"
                 target="_blank"
                 rel="noreferrer noopener"
-                className={clsx(styles.link.primary)}
+                className="link-primary"
               >
                 GitHub
               </a>
@@ -102,7 +100,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                               target="_blank"
                               rel="noreferrer nooperner"
                               aria-label="View Website"
-                              className={clsx(styles.link.icon, 'text-xl')}
+                              className="link-icon text-xl"
                             >
                               <MdFindInPage />
                             </a>
@@ -111,7 +109,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                               target="_blank"
                               rel="noreferrer nooperner"
                               aria-label="View Github"
-                              className={clsx(styles.link.icon, 'text-xl')}
+                              className="link-icon text-xl"
                             >
                               <FaGithub />
                             </a>

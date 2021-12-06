@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import clsx from 'clsx';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import {
   Card,
@@ -18,7 +17,6 @@ import { getArticleList } from '@/lib/api';
 import { FilteredArticlePosts, ArticlesProps } from '@/lib/types';
 import useFilterList from '@/hooks/useFilterList';
 import usePagenation from '@/hooks/usePagenation';
-import styles from '@/styles/index';
 
 const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
   const seo = {
@@ -39,10 +37,10 @@ const ArticlesPage: NextPage<ArticlesProps> = ({ posts }) => {
   return (
     <>
       <Layout seo={seo}>
-        <main className={clsx(styles.main)}>
+        <main className="main">
           <div className="relative w-full mb-8">
-            <h1 className={clsx(styles.heading)}>Articles</h1>
-            <p className={clsx(styles.paragraph, 'my-6')}>
+            <h1 className="heading">Articles</h1>
+            <p className="paragraph my-6">
               There are a total of {posts.length} article posts that I have
               written for this site.You can use the search box below to narrow
               it down by article titles.

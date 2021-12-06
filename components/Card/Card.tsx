@@ -1,7 +1,5 @@
 import { FC } from 'react';
-import clsx from 'clsx';
 import { CardImage, CardTitle } from './index';
-import styles from '@/styles/index';
 
 type Props = {
   href: string;
@@ -20,7 +18,7 @@ const Card: FC<Props> = ({ href, img, title, children }) => {
     <div className="flex flex-col border p-4 w-full border-gray-300 dark:border-gray-50 rounded">
       <CardImage img={img} title={title} href={href} />
       <CardTitle title={title} href={href} />
-      <div className={clsx(styles.paragraph)}>{children}</div>
+      <div className="paragraph">{children}</div>
     </div>
   );
 };

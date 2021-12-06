@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import clsx from 'clsx';
 import { navLinks } from '@/lib/links';
-import styles from '@/styles/index';
 
 const NavLinks: FC = () => {
   return (
@@ -11,7 +9,7 @@ const NavLinks: FC = () => {
         navLinks.map(({ id, path, title }) => (
           <li key={id}>
             <Link href={path}>
-              <a className={clsx(styles.link.secondary)}>{title}</a>
+              <a className="link-secondary">{title}</a>
             </Link>
           </li>
         ))}

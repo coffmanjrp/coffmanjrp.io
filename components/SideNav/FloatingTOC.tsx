@@ -1,8 +1,6 @@
 import { FC } from 'react';
 // @ts-ignore
 import { slug } from 'github-slugger';
-import clsx from 'clsx';
-import styles from '@/styles/index';
 
 type Props = {
   toc?: {
@@ -29,7 +27,7 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
   };
 
   return (
-    <aside className="w-[24vw] hidden md:block text-sm pl-4">
+    <aside className="w-[24vw] hidden lg:block text-sm pl-4">
       <ul className="sticky max-h-[calc(100vh-4rem)] top-16 pt-8 pb-10 m-0 overflow-y-auto">
         {toc?.map((item) => {
           const { tag, innerText } = item;
@@ -39,12 +37,7 @@ const FloatingTOC: FC<Props> = ({ toc }) => {
             <li key={slugger} className={`mb-1.5 ${indent[tag as Tag]}`}>
               <a
                 href={`#${slugger}`}
-                className={clsx(
-                  styles.link.secondary,
-                  'text-sm',
-                  'dark:hover:text-gray-400',
-                  'hover:font-semibold'
-                )}
+                className="link-secondary text-sm dark:hover:text-gray-400 hover:font-semibold"
               >
                 {item.innerText}
               </a>
