@@ -13,7 +13,7 @@ const FooterLinks: FC = () => {
             <a
               key={id}
               href={url}
-              className="link-icon text-2xl"
+              className="icon-link text-2xl"
               target="_blank"
               rel="noreferrer noopener"
               aria-label={label}

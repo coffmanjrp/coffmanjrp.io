@@ -103,7 +103,7 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
           </section>
           <section id="recent-projects" className="mb-10">
             <h2 className="mb-8 text-4xl font-bold dark:text-gray-100">
-              Recent Projects
+              My Projects
             </h2>
             {slicedProjedcts.length > 0 ? (
               <div
@@ -130,7 +130,7 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
                               target="_blank"
                               rel="noreferrer nooperner"
                               aria-label="View Website"
-                              className="link-icon text-xl"
+                              className="icon-link text-xl"
                             >
                               <MdFindInPage />
                             </a>
@@ -139,7 +139,7 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
                               target="_blank"
                               rel="noreferrer nooperner"
                               aria-label="View Github"
-                              className="link-icon text-xl"
+                              className="icon-link text-xl"
                             >
                               <FaGithub />
                             </a>

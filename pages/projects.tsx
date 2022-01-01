@@ -100,7 +100,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                               target="_blank"
                               rel="noreferrer nooperner"
                               aria-label="View Website"
-                              className="link-icon text-xl"
+                              className="icon-link text-xl"
                             >
                               <MdFindInPage />
                             </a>
@@ -109,7 +109,7 @@ const ArticlePage: NextPage<ProjectsProps> = ({ projects }) => {
                               target="_blank"
                               rel="noreferrer nooperner"
                               aria-label="View Github"
-                              className="link-icon text-xl"
+                              className="icon-link text-xl"
                             >
                               <FaGithub />
                             </a>
