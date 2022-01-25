@@ -32,7 +32,7 @@ const Pagenation: FC<Props> = ({
               <li className="flex justify-center items-center h-12 w-12 border border-gray-400 rounded">
                 <button
                   type="button"
-                  className="w-full h-full bg-transparent border-none text-base text-gray-600 cursor-pointer"
+                  className="w-full h-full bg-transparent border-none text-base text-gray-600 dark:text-gray-100 cursor-pointer"
                   onClick={prevPage}
                 >
                   Prev
@@ -49,7 +49,7 @@ const Pagenation: FC<Props> = ({
                   >
                     <button
                       type="button"
-                      className="w-full h-full bg-transparent border-none text-base text-gray-600 cursor-pointer"
+                      className="w-full h-full bg-transparent border-none text-base text-gray-600 dark:text-gray-100 cursor-pointer"
                       onClick={() => setCurrentPage(page)}
                     >
                       {page}
@@ -64,7 +64,7 @@ const Pagenation: FC<Props> = ({
               <li className="flex justify-center items-center h-12 w-12 border border-gray-400 rounded">
                 <button
                   type="button"
-                  className="w-full h-full bg-transparent border-none text-base text-gray-600 cursor-pointer"
+                  className="w-full h-full bg-transparent border-none text-base text-gray-600 dark:text-gray-100 cursor-pointer"
                   onClick={nextPage}
                 >
                   Next

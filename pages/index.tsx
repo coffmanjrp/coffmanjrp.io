@@ -13,6 +13,10 @@ const Home: NextPage<ALlDataProps> = ({ articles, projects }) => {
     keywords: 'Frontend Developer, Backend Developer, Web Developer',
   };
 
+  if (!articles && !projects) {
+    return <h1>Loading...</h1>;
+  }
+
   const slicedPosts = articles.slice(0, 2);
   const slicedProjedcts = projects.slice(0, 2);
 
