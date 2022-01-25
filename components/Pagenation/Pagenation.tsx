@@ -25,7 +25,7 @@ const Pagenation: FC<Props> = ({
 }) => {
   return (
     <>
-      {count >= contentPerPage && (
+      {count > contentPerPage && (
         <div className="mt-8">
           <ul className="flex gap-2">
             {currentPage !== 1 && (
@@ -39,19 +39,20 @@ const Pagenation: FC<Props> = ({
                 </button>
               </li>
             )}
-            {totalPageCount.map((index) => {
-              if (index > minContentIndex && index <= maxContentIndex) {
+            {totalPageCount.map((_, index) => {
+              const page = index + 1;
+              if (page > minContentIndex && page <= maxContentIndex) {
                 return (
                   <li
-                    key={index}
+                    key={page}
                     className="flex justify-center items-center h-12 w-12 border border-gray-400 rounded"
                   >
                     <button
                       type="button"
                       className="w-full h-full bg-transparent border-none text-base text-gray-600 cursor-pointer"
-                      onClick={() => setCurrentPage(index)}
+                      onClick={() => setCurrentPage(page)}
                     >
-                      {index}
+                      {page}
                     </button>
                   </li>
                 );
@@ -59,7 +60,7 @@ const Pagenation: FC<Props> = ({
 
               return false;
             })}
-            {currentPage !== totalPageCount.length - 1 && (
+            {currentPage !== totalPageCount.length && (
               <li className="flex justify-center items-center h-12 w-12 border border-gray-400 rounded">
                 <button
                   type="button"

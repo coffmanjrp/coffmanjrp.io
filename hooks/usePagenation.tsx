@@ -23,7 +23,9 @@ const usePagenation = ({
 
   const pageTransition = (transition: boolean) => {
     if (transition) {
-      setCurrentPage((state) => (state === pageCount ? state : state + 1));
+      setCurrentPage((state) =>
+        state === totalPageCount.length ? state : state + 1
+      );
 
       if (currentPage > maxContentIndex) {
         setMaxContentIndex(maxContentIndex + pagenation);
@@ -38,6 +40,8 @@ const usePagenation = ({
       }
     }
   };
+
+  console.log(totalPageCount);
 
   return {
     pagenationProps: {
